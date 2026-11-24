@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;font-weight:500;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2)}
+@font-face{font-family:DM;font-weight:700;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:500;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-500-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:700;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(fonts/node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-500-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ddd;font-family:DM,Anuphan,sans-serif;color:#1a1a1a}
+.board{width:1600px;height:1000px;background:#F4F4F2;position:relative;overflow:hidden;padding:40px 60px}
+.meta{display:flex;justify-content:space-between;font:500 14px DM,Anuphan;letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+.title{font:700 30px/1.2 DM,Anuphan;margin-top:10px}
+.title small{display:block;font:500 16px/1.5 DM,Anuphan;margin-top:4px;opacity:.75}
+.ink{filter:url(#ink)}
+.card{position:relative;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.lab{position:absolute;left:14px;top:10px;font:700 13px DM,Anuphan;letter-spacing:.03em;opacity:.7;color:var(--labc,#1a1a1a)}
+.en{font:600 30px/1.08 Fraunces,Trirong;letter-spacing:-.01em;color:var(--text)}
+.th{font:500 18px/1.6 Fraunces,Trirong;color:var(--text);opacity:.85}
+.light{background:var(--paper);--bg:var(--paper)}
+.dark{background:var(--main);--bg:var(--main);--frame:var(--paper);--text:var(--paper);--labc:var(--paper)}
+.r1{display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:16px;margin-top:18px;height:350px}
+.r2{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px;margin-top:16px;height:250px}
+.sw{display:flex;margin-top:16px;height:118px;border-radius:4px;overflow:hidden}
+.sw div{padding:10px 12px;font:500 13px/1.45 DM,Anuphan;display:flex;flex-direction:column;justify-content:flex-end}
+.sw b{font:700 15px DM,Anuphan}
+.mono{--win:var(--frame);--bldg:var(--frame);--lit:var(--bg);--paper2:var(--bg)}
+.sizes{display:flex;align-items:flex-end;gap:16px}
+.oa{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+/* summary */
+.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px;height:790px}
+.col{display:flex;flex-direction:column;gap:12px}
+.col h3{font:700 22px DM,Anuphan}
+.col h3 small{display:block;font:500 14px/1.5 DM,Anuphan;opacity:.7}
+.chips{display:flex;height:56px;border-radius:4px;overflow:hidden}
+.chips div{flex:1}
+/* palettes */
+.P1{--main:#B4532F;--frame:var(--main);--paper:#F4EADA;--bldg:#4A2E20;--win:#76533F;--lit:#F7BC4B;--text:#4A2E20}
+.P2{--main:#69743F;--frame:var(--main);--paper:#F1E8D6;--bldg:#3D2A1F;--win:#6B5A45;--lit:#F2B04A;--text:#3D2A1F}
+.P3{--main:#5A3A27;--frame:var(--main);--paper:#F5ECDD;--bldg:#A9492B;--win:#C97556;--lit:#FFD57E;--text:#5A3A27}
+.cmp5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px;height:800px}
+.c5{display:flex;flex-direction:column;gap:10px}
+.c5 h3{font:700 19px DM,Anuphan}.c5 h3 small{display:block;font:500 13px/1.45 DM,Anuphan;opacity:.7;min-height:38px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs id="defs">
+ <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+</defs></svg>
+
+<section class="board" id="Y0">
+ <div class="meta"><span>BAAN BOONTHAWEE — COLOR 02 · ปรับสี</span><span>กรอบชุด 3 · ไฟชุด 1</span></div>
+ <div class="title">เทียบสีตึก 5 แบบ<small>คงที่: กรอบน้ำตาลไม้ #5A3A27 · ไฟเหลืองอุ่น #F7BC4B · กระดาษครีม — หน้าต่างดับ/ประตูทุกแบบอ่อนลงเป็นสีตึกผสมครีม ~55% (โปร่งขึ้น)</small></div>
+ <div class="cmp5" id="cmp"></div>
+</section>
+<div id="pages"></div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function frame(r=3.2,nx=8,ny=9){
+ let s=`<rect x="10" y="6" width="80" height="88" style="fill:var(--frame)"/><g style="fill:var(--bg)">`;
+ for(let i=0;i<=nx;i++){const x=10+80*i/nx;s+=`<circle cx="${x}" cy="6" r="${r}"/><circle cx="${x}" cy="94" r="${r}"/>`}
+ for(let j=0;j<=ny;j++){const y=6+88*j/ny;s+=`<circle cx="10" cy="${y}" r="${r}"/><circle cx="90" cy="${y}" r="${r}"/>`}
+ return s+`</g><rect x="17" y="13" width="66" height="74" style="fill:var(--paper2,var(--paper))"/>`;
+}
+const B='style="fill:var(--bldg)"', W='style="fill:var(--win)"', L='style="fill:var(--lit)"';
+const win=(x,y,w,h,lit)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" ${lit?L:W}/>`;
+const V2=frame()+`<rect x="21" y="21" width="58" height="5" ${B}/><rect x="24" y="25" width="52" height="62" ${B}/>`+win(30,33,16,17)+win(54,33,16,17,1)+win(30,56,16,17)+win(54,56,16,17)+`<path d="M44,87 v-7 a6,6 0 0 1 12,0 v7z" ${W}/>`;
+const sy=document.createElementNS(NS,'symbol');sy.id='M';sy.setAttribute('viewBox','0 0 100 100');sy.innerHTML=V2;document.getElementById('defs').appendChild(sy);
+const mark=n=>`<svg class="ink" width="${n}" height="${n}"><use href="#M"/></svg>`;
+const hx=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+const mix=(a,b,t)=>'#'+hx(a).map((v,i)=>Math.round(v*(1-t)+hx(b)[i]*t).toString(16).padStart(2,'0')).join('').toUpperCase();
+const CREAM='#F5ECDD', FRAME='#5A3A27', LIT='#F7BC4B';
+const lum=h=>{const [r,g,b]=hx(h).map(v=>v/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*r+.7152*g+.0722*b};
+const X=[
+ {id:'b1',name:'อิฐ (เดิมชุด 3)',hex:'#A9492B',note:'อ้างอิงเดิม — โทนแดงน้ำตาล ใกล้กรอบ'},
+ {id:'b2',name:'เขียวมะกอก (ชุด 2)',hex:'#69743F',note:'ตัดกับกรอบน้ำตาลชัด ไฟเหลืองเด่น ร่มรื่น'},
+ {id:'b3',name:'น้ำตาลไม้ (ชุด 2)',hex:'#3D2A1F',note:'เข้มใกล้กรอบมาก — ตึกกับกรอบกลืนกัน'},
+ {id:'b4',name:'ดินเผาส้ม (ใหม่)',hex:'#C4693F',note:'ส้มอุ่นกว่าอิฐ โยงคาเฟ่ แยกจากกรอบได้ดีขึ้น'},
+ {id:'b5',name:'เขียวป่าหม่น (ใหม่)',hex:'#34503F',note:'เข้ม สงบ ไฟเหลืองเด่นที่สุด แต่อุ่นน้อยกว่า'},
+];
+X.forEach(x=>{x.win=mix(x.hex,CREAM,.55);x.vars=`--frame:${FRAME};--paper:${CREAM};--bldg:${x.hex};--win:${x.win};--lit:${LIT};--text:${FRAME};--main:${x.hex}`});
+document.getElementById('cmp').innerHTML=X.map(x=>`<div class="c5" style="${x.vars}">
+ <h3>${x.name}<small>${x.note}</small></h3>
+ <div class="card light" style="flex:1.6">${mark(160)}<div style="display:flex;gap:12px;align-items:flex-end;margin-top:14px"><svg width="48" height="48"><use href="#M"/></svg><svg width="24" height="24"><use href="#M"/></svg></div></div>
+ <div class="card light" style="flex:1"><div style="display:flex;gap:10px;align-items:center">${mark(66)}<div><div class="en" style="font-size:19px">Baan<br>Boonthawee</div><div class="th" style="font-size:12px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+ <div class="card dark" style="flex:1"><div style="display:flex;gap:10px;align-items:center">${mark(66)}<div><div class="en" style="font-size:19px">Baan<br>Boonthawee</div><div class="th" style="font-size:12px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+ <div class="chips"><div style="background:${FRAME}"></div><div style="background:${x.hex}"></div><div style="background:${x.win}"></div><div style="background:${LIT}"></div><div style="background:${CREAM}"></div></div>
+ <div style="font:500 12px/1.5 DM">ตึก ${x.hex} · ดับ ${x.win}</div></div>`).join('');
+const rgb=h=>hx(h).join(' ');
+document.getElementById('pages').innerHTML=X.filter(x=>x.id=='b2'||x.id=='b4').map((x,i)=>{
+ const sw=[['พื้น 60%','ครีมนม',CREAM,2.2],['หลัก 30%','ตึก · '+x.name,x.hex,1.6],['กรอบ/ตัวหนังสือ','น้ำตาลไม้',FRAME,1],['หน้าต่างดับ/ประตู','สีตึกผสมครีม',x.win,1],['เน้น 10%','ไฟเหลืองอุ่น',LIT,1]];
+ return `<section class="board" id="Y${i+1}" style="${x.vars}">
+ <div class="meta"><span>BAAN BOONTHAWEE — COLOR 02 · ร่าง CI</span><span>ตึก${x.name}</span></div>
+ <div class="title">ตึก${x.name} + กรอบน้ำตาลไม้ + ไฟเหลือง<small>${x.note}</small></div>
+ <div class="r1">
+  <div class="card light"><div class="lab">A · สแตมป์อย่างเดียว</div>${mark(200)}</div>
+  <div class="card light"><div class="lab">B · แนวตั้ง</div>${mark(150)}<div class="en" style="margin-top:12px">Baan Boonthawee</div><div class="th">บ้านบุญทวี</div></div>
+  <div class="card light"><div class="lab">C · แนวนอน</div><div style="display:flex;gap:22px;align-items:center">${mark(150)}<div><div class="en" style="font-size:40px">Baan<br>Boonthawee</div><div class="th" style="font-size:20px;margin-top:4px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+ </div>
+ <div class="r2">
+  <div class="card dark"><div class="lab">C บนพื้นสีตึก</div><div style="display:flex;gap:20px;align-items:center">${mark(120)}<div><div class="en" style="font-size:34px">Baan<br>Boonthawee</div><div class="th" style="font-size:18px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+  <div class="card light"><div class="lab">สีเดียว (ตรายาง / พิมพ์ขาวดำ)</div><div style="display:flex;gap:22px">
+   <div class="mono" style="--frame:var(--text);--bg:var(--paper)">${mark(110)}</div>
+   <div class="mono" style="--frame:var(--paper);--bg:var(--text);background:var(--text);padding:8px">${mark(94)}</div></div></div>
+  <div class="card light"><div class="lab">Line OA · 48 · 24 px</div><div class="sizes">
+   <div class="oa" style="background:var(--main);--bg:var(--main);--frame:var(--paper)">${mark(52)}</div>
+   <div class="oa" style="background:var(--paper);border:1.5px solid #0002">${mark(52)}</div>
+   <svg width="48" height="48"><use href="#M"/></svg><svg width="24" height="24"><use href="#M"/></svg></div></div>
+ </div>
+ <div class="sw">${sw.map(s=>`<div style="flex:${s[3]};background:${s[2]};color:${lum(s[2])<.3?'#fff':'#2a1a12'}"><b>${s[1]}</b>${s[0]}<br>${s[2]} · RGB ${rgb(s[2])}</div>`).join('')}</div>
+</section>`}).join('');
+</script>
+</body></html>
