@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;font-weight:500;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2)}
+@font-face{font-family:DM;font-weight:700;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:500;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-500-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:700;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(fonts/node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-500-normal.woff2)}
+@font-face{font-family:Caprasimo;src:url(fonts/node_modules/@fontsource/caprasimo/files/caprasimo-latin-400-normal.woff2)}
+@font-face{font-family:Chonburi;src:url(fonts/node_modules/@fontsource/chonburi/files/chonburi-thai-400-normal.woff2)}
+@font-face{font-family:Courier;font-weight:700;src:url(fonts/node_modules/@fontsource/courier-prime/files/courier-prime-latin-700-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ddd;font-family:DM,Anuphan,sans-serif;color:#1a1a1a}
+.board{width:1600px;height:1000px;background:#F4F4F2;position:relative;overflow:hidden;padding:44px 60px}
+.meta{display:flex;justify-content:space-between;font:500 14px DM,Anuphan;letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+.title{font:700 32px/1.2 DM,Anuphan;margin-top:12px}
+.title small{display:block;font:500 16px/1.5 DM,Anuphan;margin-top:4px;opacity:.7}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:20px;margin-top:22px;height:770px}
+.th{background:#fff;border:1.5px solid #d6d6d2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:34px}
+.num{position:absolute;left:14px;top:10px;font:700 28px DM;color:#1a1a1a}
+.idea{position:absolute;left:14px;right:14px;bottom:10px;font:500 14px/1.45 DM,Anuphan;opacity:.75}
+.sk{}
+.ink{filter:url(#ink)}
+.wA{font:600 30px/1.1 Fraunces,Trirong;letter-spacing:-.01em;margin-top:14px}
+.tA{font:500 18px/1.6 Fraunces,Trirong;opacity:.75;margin-top:2px}
+.wC{font:400 30px/1.15 Caprasimo,Chonburi;margin-top:12px}
+.tC{font:400 18px/1.6 Caprasimo,Chonburi;opacity:.8;margin-top:2px}
+.row{display:flex;align-items:center;gap:18px}
+.col{display:flex;flex-direction:column}
+.col .wA,.col .wC{margin-top:0}
+/* size test */
+.sizes{margin-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px}
+.sz{background:#fff;border:1.5px solid #d6d6d2;padding:12px 10px 10px;display:flex;flex-direction:column;align-items:center}
+.sz .lab{font:700 15px DM;align-self:flex-start}
+.sz .r{display:flex;align-items:flex-end;gap:14px;margin-top:6px}
+.oa{width:64px;height:64px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center}
+.oa svg{fill:#fff}
+.note{font:500 15px/1.6 DM,Anuphan;opacity:.75;margin-top:18px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="2"/><feDisplacementMap in="SourceGraphic" scale="2.5"/></filter>
+ <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+ <pattern id="hatch" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1" height="2.6" fill="#1a1a1a"/></pattern>
+ <pattern id="hatchH" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height=".9" fill="#1a1a1a"/></pattern>
+ <path id="ringTop" d="M50,50 m-34,0 a34,34 0 1,1 68,0 a34,34 0 1,1 -68,0"/>
+ <path id="ringBot" d="M50,50 m-42,0 a42,42 0 0,0 84,0 a42,42 0 0,0 -84,0"/>
+ <path id="ovTop" d="M50,50 m-28,0 a28,36 0 1,1 56,0 a28,36 0 1,1 -56,0"/>
+ <path id="ovBot" d="M50,50 m-36,0 a36,44 0 0,0 72,0 a36,44 0 0,0 -72,0"/>
+
+ <!-- ===== A: Warm Arch ===== -->
+ <symbol id="A1" viewBox="0 0 100 100">
+  <path fill-rule="evenodd" fill="#1a1a1a" d="M34,8 h32 a14,14 0 0 1 14,14 v70 h-60 v-70 a14,14 0 0 1 14,-14z M38,92 v-26 a12,12 0 0 1 24,0 v26z"/>
+  <path fill="#b8b8b3" d="M43,92 v-24 a7,7 0 0 1 14,0 v24z"/>
+ </symbol>
+ <symbol id="A2" viewBox="0 0 100 100">
+  <path fill-rule="evenodd" fill="#1a1a1a" d="M20,92 V40 a30,30 0 0 1 60,0 V92z M41,92 v-17 a9,9 0 0 1 18,0 v17z"/>
+  <circle cx="50" cy="40" r="8" fill="#b8b8b3"/>
+ </symbol>
+ <symbol id="A3" viewBox="0 0 100 100">
+  <path fill="#1a1a1a" d="M12,92 V48 a38,38 0 0 1 76,0 V92z"/>
+  <path fill="#7d7d79" d="M27,92 V52 a23,23 0 0 1 46,0 V92z"/>
+  <path fill="#d0d0cb" d="M40,92 V58 a10,10 0 0 1 20,0 V92z"/>
+ </symbol>
+ <symbol id="A4" viewBox="0 0 100 100">
+  <path fill-rule="evenodd" fill="#1a1a1a" d="M14,92 V44 a36,36 0 0 1 72,0 V92 h-24 V50 a12,12 0 0 0 -24,0 V92z"/>
+  <path fill="#b8b8b3" d="M38,92 V50 a12,12 0 0 1 24,0 V92z"/>
+ </symbol>
+ <symbol id="A5" viewBox="0 0 100 100">
+  <path fill-rule="evenodd" fill="#1a1a1a" d="M32,6 h36 a12,12 0 0 1 12,12 v56 h-60 v-56 a12,12 0 0 1 12,-12z M41,74 v-18 a9,9 0 0 1 18,0 v18z"/>
+  <path fill="#b8b8b3" d="M44,74 v-17 a6,6 0 0 1 12,0 v17z"/>
+  <rect x="31" y="18" width="10" height="13" rx="5" fill="#b8b8b3"/>
+  <path fill="#d6d6d1" d="M41,74 h18 l14,20 h-46z"/>
+ </symbol>
+ <symbol id="A6" viewBox="0 0 100 100">
+  <path fill-rule="evenodd" fill="#1a1a1a" d="M34,8 h32 a14,14 0 0 1 14,14 v70 h-60 v-70 a14,14 0 0 1 14,-14z M35,92 v-38 a15,15 0 0 1 30,0 v38z"/>
+  <rect x="49.2" y="39" width="1.6" height="17" fill="#1a1a1a"/>
+  <path fill="#1a1a1a" d="M43,62 a7,7 0 0 1 14,0z"/>
+  <ellipse cx="50" cy="80" rx="13" ry="9" fill="#d6d6d1"/>
+  <circle cx="50" cy="64" r="3" fill="#b8b8b3"/>
+ </symbol>
+
+ <!-- ===== C: Linocut Seal ===== -->
+ <symbol id="C1" viewBox="0 0 100 100">
+  <ellipse cx="50" cy="50" rx="46" ry="48" fill="none" stroke="#1a1a1a" stroke-width="2.4"/>
+  <ellipse cx="50" cy="50" rx="25" ry="31" fill="url(#hatchH)"/>
+  <ellipse cx="50" cy="50" rx="25" ry="31" fill="none" stroke="#1a1a1a" stroke-width="1.6"/>
+  <rect x="36" y="42" width="28" height="28" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+  <rect x="34" y="39" width="32" height="4" fill="#1a1a1a"/>
+  <g fill="#1a1a1a"><rect x="39" y="47" width="5" height="6"/><rect x="47.5" y="47" width="5" height="6"/><rect x="39" y="57" width="5" height="6"/><rect x="56" y="57" width="5" height="6"/></g>
+  <rect x="56" y="47" width="5" height="6" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+  <path d="M46.5,70 v-6 h7 v6z" fill="#1a1a1a"/>
+  <circle cx="31" cy="54" r="7" fill="url(#hatch)" stroke="#1a1a1a" stroke-width="1.2"/>
+  <rect x="30.3" y="60" width="1.4" height="10" fill="#1a1a1a"/>
+  <rect x="25" y="69.5" width="50" height="1.8" fill="#1a1a1a"/>
+  <text font-family="Caprasimo" font-size="8.4" letter-spacing=".6" fill="#1a1a1a"><textPath href="#ovTop" startOffset="25%" text-anchor="middle">BAAN BOONTHAWEE</textPath></text>
+  <text font-family="Caprasimo" font-size="7" letter-spacing="1.2" fill="#1a1a1a"><textPath href="#ovBot" startOffset="25%" text-anchor="middle">APARTMENT</textPath></text>
+ </symbol>
+ <symbol id="C2" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#1a1a1a"/>
+  <circle cx="50" cy="50" r="30" fill="url(#hatch)"/>
+  <circle cx="50" cy="50" r="30" fill="none" stroke="#fff" stroke-width="1.4"/>
+  <path d="M38,76 V52 a12,12 0 0 1 24,0 V76z" fill="#fff"/>
+  <path d="M41,76 V53 a9,9 0 0 1 18,0 V76z" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <circle cx="56" cy="66" r="1.2" fill="#1a1a1a"/>
+  <path d="M64,77 l1,-7 h7 l1,7z" fill="#fff"/><circle cx="68.5" cy="64.5" r="6" fill="#fff"/><circle cx="68.5" cy="64.5" r="6" fill="url(#hatch)" opacity=".5"/>
+  <path d="M30,77 l1,-6 h6 l1,6z" fill="#fff"/><circle cx="34" cy="66" r="5" fill="#fff"/><circle cx="34" cy="66" r="5" fill="url(#hatch)" opacity=".5"/>
+  <text font-family="Caprasimo" font-size="8.6" letter-spacing=".8" fill="#fff"><textPath href="#ringTop" startOffset="25%" text-anchor="middle">BAAN BOONTHAWEE</textPath></text>
+  <text font-family="Chonburi" font-size="8.4" letter-spacing=".4" fill="#fff"><textPath href="#ringBot" startOffset="25%" text-anchor="middle">บ้านบุญทวี</textPath></text>
+ </symbol>
+ <symbol id="C3" viewBox="0 0 100 100">
+  <rect x="12" y="6" width="76" height="88" fill="#1a1a1a"/>
+  <g fill="#F4F4F2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="24" r="3"/><circle cx="12" cy="36" r="3"/><circle cx="12" cy="48" r="3"/><circle cx="12" cy="60" r="3"/><circle cx="12" cy="72" r="3"/><circle cx="12" cy="84" r="3"/>
+  <circle cx="88" cy="12" r="3"/><circle cx="88" cy="24" r="3"/><circle cx="88" cy="36" r="3"/><circle cx="88" cy="48" r="3"/><circle cx="88" cy="60" r="3"/><circle cx="88" cy="72" r="3"/><circle cx="88" cy="84" r="3"/>
+  <circle cx="24" cy="6" r="3"/><circle cx="36" cy="6" r="3"/><circle cx="50" cy="6" r="3"/><circle cx="64" cy="6" r="3"/><circle cx="76" cy="6" r="3"/>
+  <circle cx="24" cy="94" r="3"/><circle cx="36" cy="94" r="3"/><circle cx="50" cy="94" r="3"/><circle cx="64" cy="94" r="3"/><circle cx="76" cy="94" r="3"/></g>
+  <rect x="20" y="14" width="60" height="72" fill="#fff"/>
+  <rect x="20" y="14" width="60" height="30" fill="url(#hatchH)"/>
+  <circle cx="66" cy="26" r="6" fill="#fff"/>
+  <rect x="28" y="36" width="44" height="44" fill="#1a1a1a"/>
+  <g fill="#fff"><rect x="33" y="42" width="7" height="8"/><rect x="46.5" y="42" width="7" height="8"/><rect x="60" y="42" width="7" height="8"/><rect x="33" y="56" width="7" height="8"/><rect x="60" y="56" width="7" height="8"/></g>
+  <rect x="46.5" y="56" width="7" height="8" fill="#9d9d98"/>
+  <path d="M45,80 v-9 a5,5 0 0 1 10,0 v9z" fill="#fff"/>
+  <rect x="20" y="80" width="60" height="6" fill="url(#hatch)"/>
+ </symbol>
+ <symbol id="C4" viewBox="0 0 100 100">
+  <path d="M18,94 V40 a32,32 0 0 1 64,0 V94z" fill="#1a1a1a"/>
+  <path d="M26,86 V42 a24,24 0 0 1 48,0 V86z" fill="#fff"/>
+  <rect x="49.3" y="18" width="1.4" height="68" fill="#1a1a1a"/><rect x="26" y="52" width="48" height="1.4" fill="#1a1a1a"/>
+  <path d="M26,42 a24,24 0 0 1 8,-17 c4,10 4,30 -2,61 h-6z" fill="url(#hatch)"/>
+  <path d="M74,42 a24,24 0 0 0 -8,-17 c-4,10 -4,30 2,61 h6z" fill="url(#hatch)"/>
+  <rect x="22" y="80" width="56" height="6" fill="#1a1a1a"/>
+  <path fill="#1a1a1a" d="M52,80 c0,-8 2,-14 6,-16 l-1,-5 l3,3 h3 l3,-3 l-1,5 c3,3 3,9 1,16z M66,80 c4,0 6,-3 7,-8 c0,4 -1,8 -6,9z"/>
+  <path d="M35,25 v8" stroke="#1a1a1a" stroke-width="1"/><path d="M31,37 a4,4 0 0 1 8,0z" fill="#1a1a1a"/><circle cx="35" cy="39" r="1.6" fill="#9d9d98"/>
+ </symbol>
+ <symbol id="C5" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="47" fill="#1a1a1a"/>
+  <circle cx="50" cy="50" r="41" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="2 2.4"/>
+  <rect x="28" y="26" width="44" height="48" rx="3" fill="#fff"/>
+  <rect x="31" y="29" width="38" height="42" fill="url(#hatch)"/>
+  <rect x="38" y="33" width="24" height="34" fill="#fff"/>
+  <rect x="49.3" y="33" width="1.4" height="34" fill="#1a1a1a"/><rect x="38" y="49" width="24" height="1.4" fill="#1a1a1a"/>
+  <path d="M31,29 h9 c-3,10 -3,30 0,42 h-9z" fill="#1a1a1a"/><path d="M69,29 h-9 c3,10 3,30 0,42 h9z" fill="#1a1a1a"/>
+  <rect x="25" y="72" width="50" height="4" fill="#fff"/>
+ </symbol>
+ <symbol id="C6" viewBox="0 0 100 100">
+  <rect x="6" y="20" width="88" height="60" rx="10" fill="#1a1a1a"/>
+  <rect x="11" y="25" width="78" height="50" rx="6" fill="none" stroke="#fff" stroke-width="1.2"/>
+  <circle cx="16" cy="50" r="1.8" fill="#fff"/><circle cx="84" cy="50" r="1.8" fill="#fff"/>
+  <text x="50" y="56" text-anchor="middle" font-family="Chonburi" font-size="22" fill="#fff">บ้าน</text>
+  <text x="50" y="68" text-anchor="middle" font-family="Caprasimo" font-size="6.8" letter-spacing="1.2" fill="#fff">BOONTHAWEE</text>
+ </symbol>
+</defs></svg>
+
+<!-- ================= BOARD A ================= -->
+<section class="board" id="A">
+ <div class="meta"><span>BAAN BOONTHAWEE — DRAFT 01 · ดราฟต์ ยังไม่ใช่งานจริง</span><span>ทิศทาง A · Warm Arch</span></div>
+ <div class="title">A · ซุ้มประตูอุ่น: เลือกเบอร์ที่ชอบ<small>ref: arch. (ซุ้มโค้งใน negative space) + Brother (ฟอร์มก้อนหนัก + serif นุ่ม) · ส่วนสีเทาอ่อน = แสงไฟอุ่น (จะเป็นสีดินเผา/ส้มตอนลงสี)</small></div>
+ <div class="thumbs">
+  <div class="th"><div class="num">1</div>
+   <svg class="sk" width="160" height="160"><use href="#A1"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ก้อนตึกมุมมน + ประตูโค้งมีแสงลอด — ฟอร์มเดียว เรียบที่สุด</div></div>
+  <div class="th"><div class="num">2</div>
+   <div class="row"><svg class="sk" width="130" height="130"><use href="#A2"/></svg>
+    <div class="col"><div class="wA">Baan<br>Boonthawee</div><div class="tA">บ้านบุญทวี · อพาร์ทเม้น</div></div></div>
+   <div class="idea">ตึกทั้งหลังเป็นทรงซุ้ม + หน้าต่างกลมไฟเปิด · lock-up แนวนอนสำหรับป้ายยาว</div></div>
+  <div class="th"><div class="num">3</div>
+   <svg class="sk" width="170" height="160"><use href="#A3"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ซุ้มซ้อน 3 ชั้น เหมือนเดินลึกเข้าบ้าน / แสงเย็นตอนพระอาทิตย์ตก</div></div>
+  <div class="th"><div class="num">4</div>
+   <div class="row" style="align-items:flex-end;gap:2px"><span style="font:600 86px/0.82 Fraunces">baa</span><svg class="sk" width="70" height="70" style="margin-bottom:1px"><use href="#A4"/></svg></div>
+   <div class="wA" style="font-size:26px;margin-top:10px">Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ตัว n ใน "baan" กลายเป็นซุ้มประตูมีไฟ — ตัวอักษรนำ ใช้ซุ้มเป็นไอคอน</div></div>
+  <div class="th"><div class="num">5</div>
+   <svg class="sk" width="160" height="160"><use href="#A5"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ประตูเปิด แสงทอดลงพื้น + หน้าต่างโค้งไฟเปิด — "มีคนรอกลับบ้าน"</div></div>
+  <div class="th"><div class="num">6</div>
+   <svg class="sk" width="160" height="160"><use href="#A6"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ซุ้มใหญ่ + โคมไฟห้อย (เชื่อมไฟเพนแดนต์ในบอร์ดคาเฟ่) แสงตกเป็นวงบนพื้น</div></div>
+ </div>
+</section>
+
+<!-- ================= BOARD C ================= -->
+<section class="board" id="C">
+ <div class="meta"><span>BAAN BOONTHAWEE — DRAFT 01 · ดราฟต์ ยังไม่ใช่งานจริง</span><span>ทิศทาง C · Linocut Seal</span></div>
+ <div class="title">C · ตราประทับวินเทจ: เลือกเบอร์ที่ชอบ<small>ref: maripro (ภาพพิมพ์แกะไม้ 2 สี) + OVVNSTUDIO (badge วงรี) · เส้นแรเงาจะเป็นหมึกน้ำตาลบนกระดาษครีมตอนลงสี · คำว่า APARTMENT เป็นข้อความตัวอย่าง</small></div>
+ <div class="thumbs">
+  <div class="th"><div class="num">1</div>
+   <svg class="ink" width="190" height="200"><use href="#C1"/></svg>
+   <div class="tC" style="margin-top:8px">บ้านบุญทวี</div>
+   <div class="idea">ตราวงรี ตึกเตี้ย + ต้นไม้ + หน้าต่างไฟเปิด 1 บาน ชื่อวนรอบ</div></div>
+  <div class="th"><div class="num">2</div>
+   <svg class="ink" width="210" height="210"><use href="#C2"/></svg>
+   <div class="idea">ตรากลมทึบ ประตูโค้ง + กระถางต้นไม้หน้าบ้าน · อังกฤษบน ไทยล่าง</div></div>
+  <div class="th"><div class="num">3</div>
+   <div class="row"><svg class="ink" width="140" height="150"><use href="#C3"/></svg>
+    <div class="col"><div class="wC">Baan<br>Boonthawee</div><div class="tC">บ้านบุญทวี</div></div></div>
+   <div class="idea">แสตมป์ขอบหยัก ตึกกลางคืนมีหน้าต่างไฟเปิดบานเดียว = "ห้องของคุณ"</div></div>
+  <div class="th"><div class="num">4</div>
+   <svg class="ink" width="170" height="170"><use href="#C4"/></svg>
+   <div class="wC">Baan Boonthawee</div><div class="tC">บ้านบุญทวี</div>
+   <div class="idea">หน้าต่างโค้ง ผ้าม่าน + แมวนั่งรอ + โคมไฟ — มุกอบอุ่นแบบผู้ใหญ่</div></div>
+  <div class="th"><div class="num">5</div>
+   <div class="row"><svg class="ink" width="130" height="130"><use href="#C5"/></svg>
+    <div class="col"><div class="wC">Baan<br>Boonthawee</div><div class="tC">บ้านบุญทวี</div></div></div>
+   <div class="idea">ตรากลมเล็ก หน้าต่างผ้าม่านเปิด · lock-up แนวนอน ใช้หัวกระดาษสัญญา</div></div>
+  <div class="th"><div class="num">6</div>
+   <svg class="ink" width="240" height="240" style="margin:-30px 0"><use href="#C6"/></svg>
+   <div class="idea">ป้ายชื่อบ้านแบบป้ายสังกะสี/ป้ายเลขที่บ้านไทยเก่า "บ้าน" ตัวใหญ่ — ไทยนำ</div></div>
+ </div>
+</section>
+
+<!-- ================= SIZE TEST ================= -->
+<section class="board" id="S">
+ <div class="meta"><span>BAAN BOONTHAWEE — DRAFT 01</span><span>ทดสอบขนาดเล็ก</span></div>
+ <div class="title">ทดสอบตอนเล็ก: 96 / 48 / 24 px + รูปโปรไฟล์ Line OA<small>ใช้ดูว่าแบบไหนยังอ่านออกบนไอคอนแชต ใบเสร็จ และตราประทับ</small></div>
+ <div class="sizes" id="sizes"></div>
+ <div class="note">ข้อสังเกต: ตราของทิศทาง C (C1, C2) ข้อความวนรอบอ่านไม่ออกที่ 48px ลงไป — ถ้าเลือก C ต้องมี mark ย่อแยก (เช่น หน้าต่างจาก C5) สำหรับไอคอน</div>
+</section>
+<script>
+const ids=['A1','A2','A3','A4','A5','A6','C1','C2','C3','C4','C5','C6'];
+const box=document.getElementById('sizes');
+for(const id of ids){
+ const ink=id[0]==='C'?'ink':'sk';
+ box.insertAdjacentHTML('beforeend',`<div class="sz"><div class="lab">${id.replace(/(\D)(\d)/,'$1$2')}</div><div class="r">
+ <svg width="96" height="96"><use href="#${id}"/></svg><svg width="48" height="48"><use href="#${id}"/></svg><svg width="24" height="24"><use href="#${id}"/></svg>
+ <div class="oa"><svg width="46" height="46" style="filter:invert(1)"><use href="#${id}"/></svg></div></div></div>`);
+}
+</script>
+</body></html>
