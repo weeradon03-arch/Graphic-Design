@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;font-weight:500;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2)}
+@font-face{font-family:DM;font-weight:700;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:500;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-500-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:700;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(fonts/node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-500-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ddd;font-family:DM,Anuphan,sans-serif;color:#1a1a1a}
+.board{width:1600px;height:1000px;background:#F4F4F2;position:relative;overflow:hidden;padding:44px 60px}
+.meta{display:flex;justify-content:space-between;font:500 14px DM,Anuphan;letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+.title{font:700 32px/1.2 DM,Anuphan;margin-top:12px}
+.title small{display:block;font:500 16px/1.5 DM,Anuphan;margin-top:4px;opacity:.75}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:20px;margin-top:20px;height:748px}
+.th{background:#fff;border:1.5px solid #d6d6d2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:40px}
+.num{position:absolute;left:14px;top:10px;font:700 28px DM;color:#1a1a1a}
+.idea{position:absolute;left:14px;right:14px;bottom:10px;font:500 14px/1.45 DM,Anuphan;opacity:.75}
+.wA{font:600 30px/1.1 Fraunces,Trirong;letter-spacing:-.01em;margin-top:14px}
+.tA{font:500 18px/1.6 Fraunces,Trirong;opacity:.75;margin-top:2px}
+.ink{filter:url(#ink)}
+.sizes{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px 18px}
+.sz{background:#fff;border:1.5px solid #d6d6d2;padding:10px 12px 12px;display:flex;flex-direction:column}
+.sz .lab{font:700 15px DM,Anuphan}
+.sz .r{display:flex;align-items:flex-end;gap:16px;margin-top:6px;justify-content:center}
+.oa{width:64px;height:64px;border-radius:50%;background:#e4e2dc;display:flex;align-items:center;justify-content:center;--bg:#e4e2dc}
+.h2{font:700 20px DM,Anuphan;margin-top:22px}
+.h2 small{font:500 15px DM,Anuphan;opacity:.7;margin-left:8px}
+.color{--frame:#C2603E;--paper:#F3EAD8;--bldg:#4A2E20;--win:#6E4B37;--lit:#FFC35A;--halo:#E89A4A;--sky:url(#hatchC);--wall:url(#hatchC2)}
+.cbox{background:#F3EAD8;--bg:#F3EAD8}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs id="defs">
+ <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter>
+ <pattern id="hatchH" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height=".9" fill="#1a1a1a"/></pattern>
+ <pattern id="hatchC" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height=".9" fill="#C2603E" opacity=".55"/></pattern>
+ <pattern id="hatchD" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1" height="2.6" fill="#1a1a1a"/></pattern>
+ <pattern id="hatchC2" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1" height="2.6" fill="#C2603E" opacity=".55"/></pattern>
+ <radialGradient id="glow"><stop offset="0" stop-color="var(--halo,#cfcfca)" stop-opacity="1"/><stop offset=".55" stop-color="var(--halo,#cfcfca)" stop-opacity=".55"/><stop offset="1" stop-color="var(--halo,#cfcfca)" stop-opacity="0"/></radialGradient>
+</defs></svg>
+
+<!-- ============ BOARD 1: options ============ -->
+<section class="board" id="R2">
+ <div class="meta"><span>BAAN BOONTHAWEE — DRAFT 02 · ดราฟต์ ยังไม่ใช่งานจริง</span><span>สแตมป์ C3 × การวาง A1</span></div>
+ <div class="title">ทำให้ "ไฟที่เปิด" เห็นชัด: 6 วิธี<small>สาเหตุใน C3: หน้าต่างดับเป็นสีขาว แต่บานไฟเปิดเป็นเทา ค่าความสว่างกลับด้าน ไฟเลยจม → รอบนี้หน้าต่างดับ = มืด, ไฟเปิด = สว่างที่สุดในภาพ แล้วลดจำนวน/ขยายหน้าต่าง</small></div>
+ <div class="thumbs">
+  <div class="th"><div class="num">1</div><svg class="ink" width="150" height="150"><use href="#S1"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">C3 เดิมแต่สลับค่า: หน้าต่างเหลือ 4 บาน ดับเป็นสีเข้ม บานเดียวสว่าง</div></div>
+  <div class="th"><div class="num">2</div><svg class="ink" width="150" height="150"><use href="#S2"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ตึกมีหน้าต่างบานเดียว ทรงโค้ง ขนาดใหญ่ — ไฟเปิดคือพระเอกของภาพ</div></div>
+  <div class="th"><div class="num">3</div><svg class="ink" width="150" height="150"><use href="#S3"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ผสมตรง: ก้อนตึก A1 + ประตูโค้งไฟเปิด อยู่ในกรอบแสตมป์</div></div>
+  <div class="th"><div class="num">4</div><svg class="ink" width="150" height="150"><use href="#S4"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">หน้าต่างเล็ก 6 บานแบบ C3 แต่บานไฟเปิดมีแสงฟุ้ง (halo) ล้นออกมา</div></div>
+  <div class="th"><div class="num">5</div><svg class="ink" width="150" height="150"><use href="#S5"/></svg>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ซูมเข้าหน้าต่างบานเดียว ผ้าม่านเปิด ไฟในห้องสว่าง — ใหญ่ที่สุด อ่านง่ายสุด</div></div>
+  <div class="th"><div class="num">6</div>
+   <div style="display:flex;align-items:center;gap:22px"><svg class="ink" width="150" height="150"><use href="#S1"/></svg>
+    <span style="font:700 26px DM;opacity:.5">→</span><svg class="ink" width="74" height="74"><use href="#M"/></svg></div>
+   <div class="wA">Baan Boonthawee</div><div class="tA">บ้านบุญทวี</div>
+   <div class="idea">ระบบ 2 ขนาด: ตัวเต็มละเอียด (ป้าย/สัญญา) + ตัวย่อหยักใหญ่ ไฟบานเดียว (Line/ไอคอน)</div></div>
+ </div>
+</section>
+
+<!-- ============ BOARD 2: size + colour ============ -->
+<section class="board" id="R2S">
+ <div class="meta"><span>BAAN BOONTHAWEE — DRAFT 02</span><span>ทดสอบขนาดเล็ก + ลองสี</span></div>
+ <div class="title">ทดสอบตอนเล็ก: 96 / 48 / 24 px + โปรไฟล์ Line OA<small>ดูว่าบานไฟเปิดยังเห็นอยู่ไหมเมื่อย่อ</small></div>
+ <div class="sizes" id="sizes"></div>
+ <div class="h2">ลองใส่สี: สีช่วยให้ไฟเด่นขึ้นอีกขั้น<small>โทนตัวอย่าง ดินเผา/ครีม/น้ำตาล + ไฟเหลืองอุ่น — ยังไม่ใช่สีจริง</small></div>
+ <div class="sizes" id="colors"></div>
+</section>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+// stamp frame: perforated rect, scallops cut in board bg colour
+function frame(r=3.2,nx=8,ny=9){
+ let s=`<rect x="10" y="6" width="80" height="88" style="fill:var(--frame,#1a1a1a)"/><g style="fill:var(--bg,#fff)">`;
+ for(let i=0;i<=nx;i++){const x=10+80*i/nx;s+=`<circle cx="${x}" cy="6" r="${r}"/><circle cx="${x}" cy="94" r="${r}"/>`}
+ for(let j=0;j<=ny;j++){const y=6+88*j/ny;s+=`<circle cx="10" cy="${y}" r="${r}"/><circle cx="90" cy="${y}" r="${r}"/>`}
+ return s+`</g><rect x="17" y="13" width="66" height="74" style="fill:var(--paper,#fff)"/>`;
+}
+const sky=`<rect x="17" y="13" width="66" height="42" style="fill:var(--sky,url(#hatchH))"/><circle cx="71" cy="23" r="5" style="fill:var(--paper,#fff)"/>`;
+const B='style="fill:var(--bldg,#1a1a1a)"', W='style="fill:var(--win,#5a5a57)"', L='style="fill:var(--lit,#fff)"';
+const bldg=`<rect x="25" y="33" width="50" height="4" ${B}/><rect x="27" y="36" width="46" height="51" ${B}/>`;
+const door=`<path d="M45,87 v-8 a5,5 0 0 1 10,0 v8z" ${W}/>`;
+const sym={
+ S1: frame()+sky+bldg+`<rect x="32" y="43" width="13" height="14" ${W}/><rect x="55" y="43" width="13" height="14" ${L}/><rect x="32" y="62" width="13" height="14" ${W}/><rect x="55" y="62" width="13" height="14" ${W}/>`+door,
+ S2: frame()+sky+bldg+`<path d="M38,72 V52 a12,12 0 0 1 24,0 V72z" ${L}/><rect x="49.2" y="42" width="1.6" height="30" ${B}/><rect x="38" y="57" width="24" height="1.6" ${B}/>`+door,
+ S3: frame()+sky+`<path d="M38,20 h24 a13,13 0 0 1 13,13 v54 h-50 v-54 a13,13 0 0 1 13,-13z" ${B}/><path d="M40,87 v-22 a10,10 0 0 1 20,0 v22z" ${L}/>`,
+ S4: frame()+sky+`<circle cx="62.5" cy="48" r="19" fill="url(#glow)"/>`+bldg+`<circle cx="62.5" cy="48" r="13" fill="url(#glow)"/>`+
+  [[31,43],[45.5,43],[31,59],[45.5,59],[60,59]].map(([x,y])=>`<rect x="${x}" y="${y}" width="9" height="10" ${W}/>`).join('')+`<rect x="58" y="43" width="9" height="10" ${L}/>`+door,
+ S5: frame()+`<rect x="17" y="13" width="66" height="74" style="fill:var(--wall,url(#hatchD))"/><rect x="27" y="21" width="46" height="56" rx="3" ${B}/><rect x="32" y="26" width="36" height="46" ${L}/>
+  <rect x="49.2" y="26" width="1.6" height="46" ${B}/><rect x="32" y="48" width="36" height="1.6" ${B}/>
+  <path d="M32,26 h8 c-3,12 -3,32 1,46 h-9z" ${B}/><path d="M68,26 h-8 c3,12 3,32 -1,46 h9z" ${B}/><rect x="24" y="76" width="52" height="5" ${B}/>`,
+ M: frame(5.5,4,4).replace('x="17" y="13" width="66" height="74"','x="18" y="14" width="64" height="72"')+`<rect x="29" y="34" width="42" height="4" ${B}/><rect x="31" y="37" width="38" height="50" ${B}/><rect x="42" y="47" width="16" height="17" ${L}/>`
+};
+const defs=document.getElementById('defs');
+for(const[id,body] of Object.entries(sym)){
+ const s=document.createElementNS(NS,'symbol');s.id=id;s.setAttribute('viewBox','0 0 100 100');s.innerHTML=body;defs.appendChild(s);
+}
+const lab={S1:'1',S2:'2',S3:'3',S4:'4',S5:'5',M:'6 · ตัวย่อ'};
+const row=(id,cls='',bg='')=>`<div class="sz ${cls}" style="${bg}"><div class="lab">${lab[id]}</div><div class="r">
+ <svg width="96" height="96"><use href="#${id}"/></svg><svg width="48" height="48"><use href="#${id}"/></svg><svg width="24" height="24"><use href="#${id}"/></svg>
+ <div class="oa" ${cls?'style="background:#4A2E20;--bg:#4A2E20"':''}><svg width="44" height="44"><use href="#${id}"/></svg></div></div></div>`;
+document.getElementById('sizes').innerHTML=['S1','S2','S3','S4','S5','M'].map(i=>row(i)).join('');
+document.getElementById('colors').innerHTML=['S1','S3','M'].map(i=>row(i,'color cbox')).join('');
+</script>
+</body></html>
