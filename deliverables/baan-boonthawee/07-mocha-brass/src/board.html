@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;font-weight:500;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2)}
+@font-face{font-family:DM;font-weight:700;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:500;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-500-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:700;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(fonts/node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-500-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ddd;font-family:DM,Anuphan,sans-serif;color:#1a1a1a}
+.board{width:1600px;height:1000px;background:#F4F4F2;position:relative;overflow:hidden;padding:40px 60px}
+.meta{display:flex;justify-content:space-between;font:500 14px DM,Anuphan;letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+.title{font:700 30px/1.2 DM,Anuphan;margin-top:10px}
+.title small{display:block;font:500 16px/1.5 DM,Anuphan;margin-top:4px;opacity:.75}
+.ink{filter:url(#ink)}
+.card{position:relative;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.lab{position:absolute;left:14px;top:10px;font:700 13px DM,Anuphan;letter-spacing:.03em;opacity:.7;color:var(--labc,#1a1a1a)}
+.en{font:600 30px/1.08 Fraunces,Trirong;letter-spacing:-.01em;color:var(--text)}
+.th{font:500 18px/1.6 Fraunces,Trirong;color:var(--text);opacity:.85}
+.light{background:var(--paper);--bg:var(--paper)}
+.dark{background:var(--main);--bg:var(--main);--frame:var(--paper);--text:var(--paper);--labc:var(--paper)}
+.r1{display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:16px;margin-top:18px;height:350px}
+.r2{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px;margin-top:16px;height:250px}
+.sw{display:flex;margin-top:16px;height:118px;border-radius:4px;overflow:hidden}
+.sw div{padding:10px 12px;font:500 13px/1.45 DM,Anuphan;display:flex;flex-direction:column;justify-content:flex-end}
+.sw b{font:700 15px DM,Anuphan}
+.mono{--win:var(--frame);--bldg:var(--frame);--lit:var(--bg);--paper2:var(--bg)}
+.sizes{display:flex;align-items:flex-end;gap:16px}
+.oa{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+/* summary */
+.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px;height:790px}
+.col{display:flex;flex-direction:column;gap:12px}
+.col h3{font:700 22px DM,Anuphan}
+.col h3 small{display:block;font:500 14px/1.5 DM,Anuphan;opacity:.7}
+.chips{display:flex;height:56px;border-radius:4px;overflow:hidden}
+.chips div{flex:1}
+/* palettes */
+.P1{--main:#B4532F;--frame:var(--main);--paper:#F4EADA;--bldg:#4A2E20;--win:#76533F;--lit:#F7BC4B;--text:#4A2E20}
+.P2{--main:#69743F;--frame:var(--main);--paper:#F1E8D6;--bldg:#3D2A1F;--win:#6B5A45;--lit:#F2B04A;--text:#3D2A1F}
+.P3{--main:#5A3A27;--frame:var(--main);--paper:#F5ECDD;--bldg:#A9492B;--win:#C97556;--lit:#FFD57E;--text:#5A3A27}
+.cmp5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px;height:800px}
+.c5{display:flex;flex-direction:column;gap:10px}
+.c5 h3{font:700 19px DM,Anuphan}.c5 h3 small{display:block;font:500 13px/1.45 DM,Anuphan;opacity:.7;min-height:38px}
+.dark{background:var(--altBg);--bg:var(--altBg);--frame:var(--altFrame);--paper2:var(--altPaper);--text:var(--altText);--labc:var(--altText)}
+.light{--paper2:var(--paper)}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs id="defs">
+ <linearGradient id="foil" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8C7148"/><stop offset=".35" stop-color="#E3CC98"/><stop offset=".55" stop-color="#A88A58"/><stop offset=".8" stop-color="#E8D4A6"/><stop offset="1" stop-color="#8C7148"/></linearGradient>
+ <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+</defs></svg>
+
+<section class="board" id="Z0">
+ <div class="meta"><span>BAAN BOONTHAWEE — COLOR 03 · เริ่มใหม่</span><span>อบอุ่น · มินิมอล · หรู</span></div>
+ <div class="title">5 palette ใหม่: อบอุ่น มินิมอล หรู<small>หลักใหม่: สีน้อยลง (2 สี + ไฟ 1 จุด) · ลดความสด เป็นน้ำตาลเทา/ทราย/งาช้าง · ไฟเปลี่ยนจากเหลืองสดเป็นแชมเปญ/ทองหม่น · หน้าต่างดับกลมกลืนกับตึก</small></div>
+ <div class="cmp5" id="cmp"></div>
+</section>
+<div id="pages"></div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function frame(r=3.2,nx=8,ny=9){
+ let s=`<rect x="10" y="6" width="80" height="88" style="fill:var(--frame)"/><g style="fill:var(--bg)">`;
+ for(let i=0;i<=nx;i++){const x=10+80*i/nx;s+=`<circle cx="${x}" cy="6" r="${r}"/><circle cx="${x}" cy="94" r="${r}"/>`}
+ for(let j=0;j<=ny;j++){const y=6+88*j/ny;s+=`<circle cx="10" cy="${y}" r="${r}"/><circle cx="90" cy="${y}" r="${r}"/>`}
+ return s+`</g><rect x="17" y="13" width="66" height="74" style="fill:var(--paper2,var(--paper))"/>`;
+}
+const B='style="fill:var(--bldg)"', W='style="fill:var(--win)"', L='style="fill:var(--lit)"';
+const win=(x,y,w,h,lit)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" ${lit?L:W}/>`;
+const V2=frame()+`<rect x="21" y="21" width="58" height="5" ${B}/><rect x="24" y="25" width="52" height="62" ${B}/>`+win(30,33,16,17)+win(54,33,16,17,1)+win(30,56,16,17)+win(54,56,16,17)+`<path d="M44,87 v-7 a6,6 0 0 1 12,0 v7z" ${W}/>`;
+const sy=document.createElementNS(NS,'symbol');sy.id='M';sy.setAttribute('viewBox','0 0 100 100');sy.innerHTML=V2;document.getElementById('defs').appendChild(sy);
+const mark=n=>`<svg class="ink" width="${n}" height="${n}"><use href="#M"/></svg>`;
+const hx=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+const mix=(a,b,t)=>'#'+hx(a).map((v,i)=>Math.round(v*(1-t)+hx(b)[i]*t).toString(16).padStart(2,'0')).join('').toUpperCase();
+const lum=h=>{const [r,g,b]=hx(h).map(v=>v/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*r+.7152*g+.0722*b};
+const X=[
+ {id:'L1',name:'Espresso & Oat',th:'เอสเปรสโซ · ข้าวโอ๊ต',note:'โทนเดียวไล่เข้ม เรียบที่สุด เหมือนกาแฟกับนม',paper:'#EFE8DD',frame:'#3B2F2A',bldg:'#6B5A4E',lit:'#D9B97E',text:'#3B2F2A',altBg:'#3B2F2A',altFrame:'#EFE8DD',altPaper:'#EFE8DD',altText:'#EFE8DD'},
+ {id:'L2',name:'Taupe & Ivory',th:'ทอป · งาช้าง',note:'นุ่ม สว่าง แบบโรงแรมบูติก คอนทราสต์ต่ำ',paper:'#F6F1EA',frame:'#8C7B6B',bldg:'#5E5045',lit:'#E8CFA0',text:'#5E5045',altBg:'#5E5045',altFrame:'#F6F1EA',altPaper:'#F6F1EA',altText:'#F6F1EA'},
+ {id:'L3',name:'Mocha & Brass',th:'มอคค่า · ทองเหลือง',note:'กรอบทองเหลืองหม่น ตึกมอคค่า — หรูที่สุด ทำฟอยล์ทองได้',paper:'#F2EBE1',frame:'#A08561',bldg:'#4A3B33',lit:'#F7BC4B',win:'#E9DFD1',text:'#4A3B33',altBg:'#4A3B33',altFrame:'#A08561',altPaper:'#F2EBE1',altText:'#F2EBE1'},
+ {id:'L4',name:'Clay & Sand',th:'ดินอ่อน · ทราย',note:'อุ่นที่สุดในชุดนี้ แต่หม่นลงจากดินเผาเดิมมาก',paper:'#EDE3D6',frame:'#B98E76',bldg:'#8A5E49',lit:'#F3DDB3',text:'#6E4A3A',altBg:'#8A5E49',altFrame:'#EDE3D6',altPaper:'#EDE3D6',altText:'#EDE3D6'},
+ {id:'L5',name:'Cocoa Night',th:'โกโก้ · แชมเปญ',note:'กลับด้าน พื้นเข้ม ตึกครีม กรอบแชมเปญ — ดูกลางคืน หรูแบบเลานจ์',paper:'#2B2320',frame:'#C9AE82',bldg:'#E9DFD1',lit:'#D8B46A',text:'#E9DFD1',altBg:'#EFE8DD',altFrame:'#2B2320',altPaper:'#2B2320',altText:'#2B2320'},
+];
+X.forEach(x=>{x.win=x.win||mix(x.bldg,x.paper,.35);x.vars=`--frame:${x.frame};--paper:${x.paper};--bldg:${x.bldg};--win:${x.win};--lit:${x.lit};--text:${x.text};--altBg:${x.altBg};--altFrame:${x.altFrame};--altPaper:${x.altPaper};--altText:${x.altText}`});
+document.getElementById('cmp').innerHTML=X.map(x=>`<div class="c5" style="${x.vars}">
+ <h3>${x.id.slice(1)} · ${x.name}<small>${x.th} — ${x.note}</small></h3>
+ <div class="card light" style="flex:1.6">${mark(160)}<div style="display:flex;gap:12px;align-items:flex-end;margin-top:14px"><svg width="48" height="48"><use href="#M"/></svg><svg width="24" height="24"><use href="#M"/></svg></div></div>
+ <div class="card light" style="flex:1"><div style="display:flex;gap:10px;align-items:center">${mark(66)}<div><div class="en" style="font-size:19px">Baan<br>Boonthawee</div><div class="th" style="font-size:12px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+ <div class="card dark" style="flex:1"><div style="display:flex;gap:10px;align-items:center">${mark(66)}<div><div class="en" style="font-size:19px">Baan<br>Boonthawee</div><div class="th" style="font-size:12px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+ <div class="chips">${[x.paper,x.frame,x.bldg,x.win,x.lit].map(c=>`<div style="background:${c}"></div>`).join('')}</div>
+ <div style="font:500 12px/1.5 DM">กรอบ ${x.frame} · ตึก ${x.bldg} · ไฟ ${x.lit}</div></div>`).join('');
+const rgb=h=>hx(h).join(' ');
+const x=X[2];
+const sw=[['พื้น 60%','ครีมงาช้าง',x.paper,2.2],['หลัก 30%','มอคค่า (ตึก/ตัวหนังสือ)',x.bldg,1.6],['รอง','ทองเหลืองหม่น (กรอบ)',x.frame,1],['หน้าต่างดับ/ประตู','ครีม',x.win,1],['เน้น','ไฟเหลืองอุ่น',x.lit,1]];
+document.getElementById('pages').innerHTML=`<section class="board" id="Z1" style="${x.vars}">
+ <div class="meta"><span>BAAN BOONTHAWEE — COLOR 04 · ร่าง CI (ปรับสีหน้าต่าง)</span><span>3 · Mocha & Brass</span></div>
+ <div class="title">Mocha & Brass <span style="font-weight:500;opacity:.6">มอคค่า · ทองเหลือง</span><small>ไฟเปิด #F7BC4B · หน้าต่างดับ/ประตู #E9DFD1 · ฟอยล์ทองด้านล่างเป็น mockup คร่าวๆ ของนามบัตร/หัวกระดาษ ไม่ใช่ภาพจริง</small></div>
+ <div class="r1">
+  <div class="card light"><div class="lab">A · สแตมป์อย่างเดียว</div>${mark(200)}</div>
+  <div class="card light"><div class="lab">B · แนวตั้ง</div>${mark(150)}<div class="en" style="margin-top:12px">Baan Boonthawee</div><div class="th">บ้านบุญทวี</div></div>
+  <div class="card light"><div class="lab">C · แนวนอน</div><div style="display:flex;gap:22px;align-items:center">${mark(150)}<div><div class="en" style="font-size:40px">Baan<br>Boonthawee</div><div class="th" style="font-size:20px;margin-top:4px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+ </div>
+ <div class="r2">
+  <div class="card dark"><div class="lab">C บนพื้นมอคค่า</div><div style="display:flex;gap:20px;align-items:center">${mark(120)}<div><div class="en" style="font-size:34px">Baan<br>Boonthawee</div><div class="th" style="font-size:18px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div>
+  <div class="card light"><div class="lab">สีเดียว · ฟอยล์ทองบนนามบัตรมอคค่า</div><div style="display:flex;gap:22px;align-items:center">
+   <div class="mono" style="--frame:var(--text);--bg:var(--paper)">${mark(104)}</div>
+   <div style="background:${x.bldg};width:200px;height:120px;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 14px #0003">
+    <div class="mono" style="--frame:url(#foil);--bg:${x.bldg}">${mark(62)}</div>
+    <div style="font:600 15px/1.05 Fraunces;color:#D9C08C">Baan<br>Boonthawee</div></div></div></div>
+  <div class="card light"><div class="lab">Line OA · 48 · 24 px</div><div class="sizes">
+   <div class="oa" style="background:${x.bldg};--bg:${x.bldg};--frame:${x.frame};--paper2:${x.paper}">${mark(52)}</div>
+   <div class="oa" style="background:var(--paper);border:1.5px solid #0002">${mark(52)}</div>
+   <svg width="48" height="48"><use href="#M"/></svg><svg width="24" height="24"><use href="#M"/></svg></div></div>
+ </div>
+ <div class="sw">${sw.map(s=>`<div style="flex:${s[3]};background:${s[2]};color:${lum(s[2])<.3?'#fff':'#2a1a12'}"><b>${s[1]}</b>${s[0]}<br>${s[2]} · RGB ${rgb(s[2])}</div>`).join('')}</div>
+</section>`;
+document.getElementById('pages').insertAdjacentHTML('beforeend',`<section class="board" id="Z2">
+ <div class="meta"><span>BAAN BOONTHAWEE — COLOR 04</span><span>ก่อน / หลัง</span></div>
+ <div class="title">Mocha & Brass: ก่อน / หลังปรับสีหน้าต่าง<small>ก่อน: ไฟแชมเปญ #E6C88E · หน้าต่างดับ #857970 — หลัง: ไฟ #F7BC4B · หน้าต่างดับ/ประตู #E9DFD1</small></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;height:760px">
+ ${[['ก่อน',X[2].vars.replace('--lit:#F7BC4B','--lit:#E6C88E').replace('--win:#E9DFD1','--win:#857970')],['หลัง',X[2].vars]].map(([t,v])=>`<div class="card light" style="${v}"><div class="lab" style="font-size:20px">${t}</div>${mark(280)}
+  <div style="display:flex;gap:26px;align-items:flex-end;margin-top:30px"><svg width="96" height="96"><use href="#M"/></svg><svg width="48" height="48"><use href="#M"/></svg><svg width="24" height="24"><use href="#M"/></svg>
+  <div class="card dark" style="width:150px;height:96px">${mark(70)}</div></div></div>`).join('')}
+ </div></section>`);
+</script>
+</body></html>
