@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;font-weight:500;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2)}
+@font-face{font-family:DM;font-weight:700;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:500;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-500-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:700;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:300;src:url(fonts/node_modules/@fontsource/fraunces/files/fraunces-latin-300-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(fonts/node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:YS;src:url(fonts/node_modules/@fontsource/young-serif/files/young-serif-latin-400-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:300;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-300-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-500-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1C1A17;--pap:#F5F2EC;--lamp:#F7BC4B}
+body{background:#ddd;font-family:DM,Anuphan,sans-serif;color:#1a1a1a}
+.board{width:1600px;height:1000px;background:#E9E6E0;position:relative;overflow:hidden;padding:40px 60px}
+.meta{display:flex;justify-content:space-between;font:500 14px DM,Anuphan;letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+.title{font:700 30px/1.2 DM,Anuphan;margin-top:10px}
+.title small{display:block;font:500 16px/1.5 DM,Anuphan;margin-top:4px;opacity:.75}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:18px;margin-top:20px;height:772px}
+.th{background:var(--pap);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:40px;color:var(--ink);--bg:var(--pap)}
+.th.inv{background:var(--ink);color:var(--pap);--bg:var(--ink)}
+.num{position:absolute;left:14px;top:10px;font:700 26px DM}
+.idea{position:absolute;left:14px;right:14px;bottom:10px;font:500 14px/1.45 DM,Anuphan;opacity:.75}
+.en1{font:600 30px/1.1 Fraunces;letter-spacing:-.01em;margin-top:16px}
+.th1{font:500 17px/1.6 Trirong;opacity:.8}
+.en2{font:300 24px/1.2 Fraunces;letter-spacing:.24em;text-transform:uppercase;margin-top:20px;padding-left:.24em}
+.th2{font:300 16px/1.7 Trirong;letter-spacing:.08em;opacity:.85;margin-top:2px}
+.rule{width:40px;height:1px;background:currentColor;opacity:.5;margin:8px 0 4px}
+.en3{font:400 25px/1.2 YS;letter-spacing:.14em;text-transform:uppercase;margin-top:18px;padding-left:.14em}
+.grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:20px;height:370px}
+.grid3{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:18px;margin-top:18px;height:370px}
+.lab{position:absolute;left:14px;top:10px;font:700 13px DM,Anuphan;letter-spacing:.03em;opacity:.6}
+.sizes{display:flex;align-items:flex-end;gap:18px}
+.oa{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.35;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .5 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;height:770px}
+.r1{display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:16px;margin-top:18px;height:360px}
+.r2{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:16px;height:400px}
+.en3h{font:400 34px/1.35 YS;letter-spacing:.14em;text-transform:uppercase}
+.wm{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center}
+.wm .en3,.wm .en3h{margin-top:0}
+.ln{height:1.5px;background:currentColor;opacity:.55;margin:10px 0 6px}
+.flank{display:flex;align-items:center;gap:14px;margin-top:6px}.flank i{flex:1;height:1.5px;background:currentColor;opacity:.55}
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px;height:400px}
+.hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px;height:330px}
+.wm.left{text-align:left}.wm.left .en3h{margin-right:-.14em}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs id="defs">
+ <filter id="inkS" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".12" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter>
+ <filter id="stampF"><feTurbulence type="fractalNoise" baseFrequency=".5" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.8 1.3" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>
+ <pattern id="hatchK" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width=".9" height="2.4" fill="#1C1A17"/></pattern>
+ <pattern id="hatchW" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width=".9" height="2.4" fill="#F5F2EC"/></pattern>
+</defs></svg>
+
+<section class="board" id="N1">
+ <div class="meta"><span>BAAN BOONTHAWEE — DRAFT 10</span><span>เส้นคั่นอังกฤษ / ไทย</span></div>
+ <div class="title">เส้นคั่นระหว่างชื่ออังกฤษกับไทย: เทียบ 3 แบบ<small>เส้นเดิมสั้นเกินไปจนดูเหมือนขีดลอยๆ → ถ้ามีเส้น ต้องยาวเท่าบล็อกชื่อ · ใช้โลโก้ 2A + Young Serif</small></div>
+ <div class="vgrid"><div class="th" style="padding-bottom:0"><div class="lab">1 · ไม่มีเส้น · แนวตั้ง</div><svg width="150" height="150" style="margin-bottom:18px"><use href="#A2"/></svg><div class="wm"><div class="en3" style="margin-top:0">Baan Boonthawee</div><div style="height:8px"></div><div class="th2" style="margin:0">บ้านบุญทวี</div></div></div><div class="th" style="padding-bottom:0"><div class="lab">2 · เส้นยาวเท่าชื่ออังกฤษ · แนวตั้ง</div><svg width="150" height="150" style="margin-bottom:18px"><use href="#A2"/></svg><div class="wm"><div class="en3" style="margin-top:0">Baan Boonthawee</div><div class="ln"></div><div class="th2" style="margin:0">บ้านบุญทวี</div></div></div><div class="th" style="padding-bottom:0"><div class="lab">3 · เส้นขนาบชื่อไทย · แนวตั้ง</div><svg width="150" height="150" style="margin-bottom:18px"><use href="#A2"/></svg><div class="wm"><div class="en3" style="margin-top:0">Baan Boonthawee</div><div class="flank"><i></i><div class="th2" style="margin:0">บ้านบุญทวี</div><i></i></div></div></div></div>
+ <div class="hgrid"><div class="th" style="padding-bottom:0"><div class="lab">1 · ไม่มีเส้น · แนวนอน</div><div style="display:flex;align-items:center;gap:22px"><svg width="120" height="120"><use href="#A2"/></svg><div class="wm left"><div class="en3h" style="font-size:28px">Baan<br>Boonthawee</div><div style="height:6px"></div><div class="th2" style="margin:0;font-size:17px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div><div class="th" style="padding-bottom:0"><div class="lab">2 · เส้นยาวเท่าชื่ออังกฤษ · แนวนอน</div><div style="display:flex;align-items:center;gap:22px"><svg width="120" height="120"><use href="#A2"/></svg><div class="wm left"><div class="en3h" style="font-size:28px">Baan<br>Boonthawee</div><div class="ln"></div><div class="th2" style="margin:0;font-size:17px">บ้านบุญทวี อพาร์ทเม้น</div></div></div></div><div class="th" style="padding-bottom:0"><div class="lab">3 · เส้นขนาบชื่อไทย · แนวนอน</div><div style="display:flex;align-items:center;gap:22px"><svg width="120" height="120"><use href="#A2"/></svg><div class="wm left"><div class="en3h" style="font-size:28px">Baan<br>Boonthawee</div><div class="flank"><i></i><div class="th2" style="margin:0;font-size:17px">บ้านบุญทวี อพาร์ทเม้น</div><i></i></div></div></div></div></div>
+</section>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const INK='#1C1A17', PAP='#F5F2EC';
+function frame(fr,bg,pap,r=3.2,nx=8,ny=9,inset=7){
+ let s=`<rect x="10" y="6" width="80" height="88" fill="${fr}"/><g style="fill:var(--bg,${PAP})">`;
+ for(let i=0;i<=nx;i++){const x=10+80*i/nx;s+=`<circle cx="${x}" cy="6" r="${r}"/><circle cx="${x}" cy="94" r="${r}"/>`}
+ for(let j=0;j<=ny;j++){const y=6+88*j/ny;s+=`<circle cx="10" cy="${y}" r="${r}"/><circle cx="90" cy="${y}" r="${r}"/>`}
+ return s+`</g><rect x="${10+inset}" y="${6+inset}" width="${80-2*inset}" height="${88-2*inset}" fill="${pap}"/>`;
+}
+const WIN=[[30,33],[54,33,1],[30,56],[54,56]];
+const DOOR='M44,87 v-7 a6,6 0 0 1 12,0 v7z';
+function solid({fr=INK,pap=PAP,bldg=INK,hatch='url(#hatchK)',winBg=PAP,lit=PAP,f}={}){
+ let s=(f||frame)(fr,null,pap)+`<rect x="21" y="21" width="58" height="5" fill="${bldg}"/><rect x="24" y="25" width="52" height="63.5" fill="${bldg}"/>`;
+ for(const [x,y,l] of WIN) s+= l?`<rect x="${x}" y="${y}" width="16" height="17" fill="${lit}"/>`:`<rect x="${x}" y="${y}" width="16" height="17" fill="${winBg}"/><rect x="${x}" y="${y}" width="16" height="17" fill="${hatch}"/>`;
+ return s+`<path d="${DOOR}" fill="${winBg}"/><path d="${DOOR}" fill="${hatch}"/>`;
+}
+const sym={
+ S1: solid(),
+ S2: solid({lit:'#F7BC4B'}),
+ S3: frame(INK,null,PAP,3.2,8,9,4.5)+`<g fill="none" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"><path d="M21,23.5 h58"/><rect x="25" y="26" width="50" height="61"/>`+
+     WIN.filter(w=>!w[2]).map(([x,y])=>`<rect x="${x}" y="${y}" width="16" height="17" stroke-width="1.6"/>`).join('')+`<path d="${DOOR}" stroke-width="1.6"/></g><rect x="54" y="33" width="16" height="17" fill="${INK}"/>`,
+ S4: solid({fr:PAP,pap:'#1C1A17',bldg:PAP,hatch:'url(#hatchK)',winBg:PAP,lit:'#F7BC4B'}).replace(/<rect x="(30|54)" y="(33|56)" width="16" height="17" fill="#F5F2EC"\/><rect x="\1" y="\2" width="16" height="17" fill="url\(#hatchK\)"\/>/g,'<rect x="$1" y="$2" width="16" height="17" fill="#1C1A17"/><rect x="$1" y="$2" width="16" height="17" fill="url(#hatchW)"/>').replace(`<path d="${DOOR}" fill="#F5F2EC"/><path d="${DOOR}" fill="url(#hatchK)"/>`,`<path d="${DOOR}" fill="#1C1A17"/><path d="${DOOR}" fill="url(#hatchW)"/>`),
+ S5: frame(INK,null,PAP)+`<rect x="21" y="21" width="58" height="5" fill="${INK}"/><rect x="24" y="25" width="52" height="63.5" fill="${INK}"/><g fill="none" stroke="${PAP}" stroke-width="1.3">`+
+     WIN.filter(w=>!w[2]).map(([x,y])=>`<rect x="${x+.7}" y="${y+.7}" width="14.6" height="15.6"/>`).join('')+`<path d="M44.7,87 v-7 a5.3,5.3 0 0 1 10.6,0 v7"/></g><rect x="54" y="33" width="16" height="17" fill="${PAP}"/>`,
+ S6: solid({f:(fr,b,pap)=>frame(fr,b,pap,2.1,13,14,5)}),
+};
+
+sym.A2=solid({lit:'#F7BC4B',hatch:'none'});
+sym.B2=sym.S5.replace('<rect x="54" y="33" width="16" height="17" fill="#F5F2EC"/>','<rect x="54" y="33" width="16" height="17" fill="#F7BC4B"/>');
+sym.A4=solid({fr:PAP,pap:'#1C1A17',bldg:PAP,hatch:'none',winBg:'#1C1A17',lit:'#F7BC4B'});
+sym.M1=sym.S5;
+const defs=document.getElementById('defs');
+for(const[id,body] of Object.entries(sym)){const s=document.createElementNS(NS,'symbol');s.id=id;s.setAttribute('viewBox','0 0 100 100');s.innerHTML=`<g filter="url(#inkS)">${body}</g>`;defs.appendChild(s)}
+</script>
+</body></html>
