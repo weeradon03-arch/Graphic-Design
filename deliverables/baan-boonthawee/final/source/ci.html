@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;font-weight:500;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2)}
+@font-face{font-family:DM;font-weight:700;src:url(fonts/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:500;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-500-normal.woff2)}
+@font-face{font-family:Anuphan;font-weight:700;src:url(fonts/node_modules/@fontsource/anuphan/files/anuphan-thai-700-normal.woff2)}
+@font-face{font-family:YS;src:url(fonts/node_modules/@fontsource/young-serif/files/young-serif-latin-400-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:400;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-400-normal.woff2)}
+@font-face{font-family:Trirong;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-thai-500-normal.woff2)}
+@font-face{font-family:TrirongL;font-weight:500;src:url(fonts/node_modules/@fontsource/trirong/files/trirong-latin-500-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1C1A17;--pap:#F5F2EC;--lamp:#F7BC4B}
+body{background:#ccc;font-family:DM,Anuphan,sans-serif;color:var(--ink)}
+.pg{width:1600px;height:1000px;background:var(--pap);position:relative;overflow:hidden;padding:56px 72px}
+.hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.5px solid var(--ink);padding-bottom:14px}
+.hd h1{font:400 30px/1 YS;letter-spacing:.12em;text-transform:uppercase}
+.hd h1 small{font:500 20px Anuphan;letter-spacing:0;text-transform:none;margin-left:14px;opacity:.7}
+.hd span{font:500 13px DM;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+.ft{position:absolute;left:72px;right:72px;bottom:30px;display:flex;justify-content:space-between;font:500 12px DM;letter-spacing:.14em;text-transform:uppercase;opacity:.45}
+.cap{font:500 15px/1.6 DM,Anuphan;opacity:.8}
+.cap b{font-weight:700}
+.tile{background:#fff;border:1px solid #0001;position:relative;display:flex;align-items:center;justify-content:center}
+.tile.p{background:var(--pap);border-color:#0002}
+.tile.d{background:var(--ink)}
+.tl{position:absolute;z-index:3;left:14px;top:12px;font:700 13px DM,Anuphan;letter-spacing:.04em;opacity:.65}
+.d .tl{color:var(--pap)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:22px;margin-top:30px;height:520px}
+.notes{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:22px;margin-top:18px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:30px;height:470px}
+.sw{display:grid;grid-template-columns:2.2fr 1.2fr 1fr;gap:20px;margin-top:30px;height:600px}
+.sw div.c{padding:22px;display:flex;flex-direction:column;justify-content:flex-end;font:500 16px/1.7 DM,Anuphan}
+.sw b{font:400 26px/1.3 YS;letter-spacing:.06em;display:block;margin-bottom:8px}
+.x{position:absolute;inset:0;pointer-events:none}
+.grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.35;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .5 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")}
+.no{position:absolute;right:12px;top:10px;width:30px;height:30px;border-radius:50%;background:#C8402E;color:#fff;font:700 18px/30px DM;text-align:center}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <filter id="stampF"><feTurbulence type="fractalNoise" baseFrequency=".5" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.8 1.3" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>
+</defs></svg>
+
+<!-- 1 COVER -->
+<section class="pg" id="p01" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+ <img src="final/svg/BBT-B-vertical-color.svg" width="560">
+ <div style="margin-top:56px;font:500 14px DM;letter-spacing:.3em;text-transform:uppercase;opacity:.6">Brand Identity Guidelines · คู่มืออัตลักษณ์แบรนด์</div>
+ <div style="margin-top:10px;font:500 13px DM;letter-spacing:.2em;opacity:.45">VERSION 1.0 · 2026</div>
+ <div class="grain"></div>
+</section>
+
+<!-- 2 LOGO SYSTEM -->
+<section class="pg" id="p02">
+ <div class="hd"><h1>Logo<small>ระบบโลโก้ 3 แบบ</small></h1><span>01 / Logo system</span></div>
+ <div class="g3">
+  <div class="tile p"><div class="tl">A · สแตมป์อย่างเดียว</div><img src="final/svg/BBT-A-stamp-color.svg" width="250"></div>
+  <div class="tile p"><div class="tl">B · แนวตั้ง</div><img src="final/svg/BBT-B-vertical-color.svg" width="380"></div>
+  <div class="tile p"><div class="tl">C · แนวนอน</div><img src="final/svg/BBT-C-horizontal-color.svg" width="620"></div>
+ </div>
+ <div class="notes">
+  <div class="cap"><b>ใช้เมื่อ:</b> พื้นที่เล็กหรือจัตุรัส — รูปโปรไฟล์ Line OA / โซเชียล, ไอคอน, ตรายาง, สติกเกอร์, ป้ายเลขห้อง</div>
+  <div class="cap"><b>ใช้เมื่อ:</b> พื้นที่สูงหรือกึ่งกลาง — ป้ายหน้าตึก, ปกเอกสาร, โปสเตอร์, โพสต์</div>
+  <div class="cap"><b>ใช้เมื่อ:</b> พื้นที่ยาว — หัวกระดาษสัญญาเช่า, ใบเสร็จ, ป้ายแนวยาว, อีเมล · ใช้ได้เฉพาะ 3 แบบนี้ ห้ามจัดวางใหม่เอง</div>
+ </div>
+ <div class="cap" style="margin-top:26px;max-width:1100px"><b>แนวคิด:</b> แสตมป์ขอบหยักวาดลายมือ ข้างในเป็นตึกอพาร์ทเม้นที่มี <b>หน้าต่างไฟเปิดเพียงบานเดียว</b> — ห้องของคุณ มีคนรอกลับบ้าน · ขาวดำให้ความเรียบหรู ไฟเหลืองเป็นสีเดียวที่ให้ความอบอุ่น</div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+
+<!-- 3 COLOR VERSIONS -->
+<section class="pg" id="p03">
+ <div class="hd"><h1>Versions<small>เวอร์ชันสีของโลโก้</small></h1><span>02 / Colour versions</span></div>
+ <div class="g4">
+  <div class="tile p"><div class="tl">1 · หลัก (สี)</div><img src="final/svg/BBT-A-stamp-color.svg" width="210"></div>
+  <div class="tile d"><div class="tl">2 · กลับด้าน (บนพื้นดำ)</div><img src="final/svg/BBT-A-stamp-reverse.svg" width="210"></div>
+  <div class="tile" style="background:#fff"><div class="tl">3 · ดำสีเดียว</div><img src="final/svg/BBT-A-stamp-black.svg" width="210"></div>
+  <div class="tile d"><div class="tl">4 · ขาวสีเดียว</div><img src="final/svg/BBT-A-stamp-white.svg" width="210"></div>
+ </div>
+ <div class="g4" style="margin-top:18px;height:auto">
+  <div class="cap">ใช้ทั่วไปบนพื้นขาวนวลหรือขาว — หน้าต่างดับเป็นสีกระดาษ ไฟเหลืองบานเดียว</div>
+  <div class="cap">ป้ายกล่องไฟ, รูปโปรไฟล์ดำ, งานกลางคืน — กรอบและตึกเป็นสีขาวนวล หน้าต่างดับเป็นสีพื้น</div>
+  <div class="cap">ตรายาง, แฟกซ์/ถ่ายเอกสาร, งานพิมพ์สีเดียว — หน้าต่างดับเหลือเส้นกรอบ บานไฟเปิดเป็นช่องเปิดโล่ง</div>
+  <div class="cap">ฟอยล์/ปั๊ม/สกรีนสีเดียวบนพื้นเข้ม, แกะสลัก, ป้ายโลหะ</div>
+ </div>
+ <div class="cap" style="margin-top:20px">ทุกเวอร์ชันมีครบทั้ง A / B / C ในโฟลเดอร์ <b>logo/svg</b> และ <b>logo/png</b></div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+
+<!-- 4 CLEAR SPACE & MIN SIZE -->
+<section class="pg" id="p04">
+ <div class="hd"><h1>Space &amp; Size<small>พื้นที่ว่างรอบโลโก้ และขนาดเล็กสุด</small></h1><span>03 / Clear space</span></div>
+ <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:30px;margin-top:30px;height:640px">
+  <div class="tile p" style="flex-direction:column">
+   <div class="tl">Clear space = X (ความกว้างหน้าต่าง 1 บาน)</div>
+   <div style="position:relative;padding:64px;outline:1.5px dashed #C8402E;outline-offset:0">
+    <img src="final/svg/BBT-C-horizontal-color.svg" width="660" style="display:block">
+    <div style="position:absolute;left:0;top:0;width:64px;height:64px;background:#C8402E22;font:700 14px DM;color:#C8402E;display:flex;align-items:center;justify-content:center">X</div>
+    <div style="position:absolute;right:0;bottom:0;width:64px;height:64px;background:#C8402E22;font:700 14px DM;color:#C8402E;display:flex;align-items:center;justify-content:center">X</div>
+   </div>
+   <div class="cap" style="margin-top:26px;max-width:640px;text-align:center">เว้นพื้นที่ว่างรอบโลโก้อย่างน้อย <b>X</b> ทุกด้าน (X = ความกว้างหน้าต่าง 1 บาน = 16% ของความกว้างสแตมป์) ห้ามมีตัวหนังสือ ภาพ หรือขอบกระดาษเข้ามาในพื้นที่นี้</div>
+  </div>
+  <div class="tile p" style="flex-direction:column;align-items:stretch;padding:50px 40px 30px">
+   <div class="tl">ขนาดเล็กสุด</div>
+   <div style="display:flex;align-items:flex-end;gap:34px;justify-content:center">
+    <div style="text-align:center"><img src="final/svg/BBT-A-stamp-color.svg" width="24"><div class="cap">A<br>24 px · 8 มม.</div></div>
+    <div style="text-align:center"><img src="final/svg/BBT-B-vertical-color.svg" width="120"><div class="cap">B<br>120 px · 30 มม.</div></div>
+    <div style="text-align:center"><img src="final/svg/BBT-C-horizontal-color.svg" width="160"><div class="cap">C<br>160 px · 40 มม.</div></div>
+   </div>
+   <div class="cap" style="margin-top:40px">เล็กกว่านี้ตัวหนังสือไทยจะอ่านไม่ออก → ให้ใช้แบบ A แทน<br>งานพิมพ์ที่เล็กกว่า 12 มม. (ตรายาง, ป้ายเลขห้อง) ใช้ <b>ดำสีเดียว</b></div>
+  </div>
+ </div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+
+<!-- 5 COLOUR -->
+<section class="pg" id="p05">
+ <div class="hd"><h1>Colour<small>สี</small></h1><span>04 / Colour palette</span></div>
+ <div class="sw">
+  <div class="c" style="background:var(--ink);color:var(--pap)"><b>INK · หมึกดำอุ่น</b>HEX #1C1A17 · RGB 28 26 23<br>CMYK 0 7 18 89 · พื้นใหญ่ใช้ Rich Black 60 40 40 100<br>ใช้กับ: โลโก้, ตัวหนังสือทั้งหมด, พื้นเข้ม — ประมาณ 30%</div>
+  <div class="c" style="background:var(--pap);border:1px solid #0002"><b>PAPER · ขาวนวล</b>HEX #F5F2EC · RGB 245 242 236<br>CMYK 0 1 4 4<br>ใช้กับ: พื้นหลัก — ประมาณ 65%</div>
+  <div class="c" style="background:var(--lamp)"><b>LAMP · ไฟเหลืองอุ่น</b>HEX #F7BC4B · RGB 247 188 75<br>CMYK 0 24 70 3<br>ใช้กับ: หน้าต่างไฟเปิดเท่านั้น (+ จุดเน้นเล็กๆ) — ไม่เกิน 5%</div>
+ </div>
+ <div class="cap" style="margin-top:24px;max-width:1300px">หลักการ: <b>ขาวดำเป็นหลัก ไฟเหลืองเป็นสีเดียวที่ให้ความอบอุ่น</b> ห้ามเพิ่มสีอื่นในโลโก้ · ค่า CMYK แปลงจากจอ ต้องทำปรู๊ฟกับโรงพิมพ์จริงก่อนพิมพ์ โดยเฉพาะสีเหลืองและพื้นดำขนาดใหญ่ · ถ้าพิมพ์บนกระดาษขาว ไม่ต้องพิมพ์สีขาวนวลรองพื้น</div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+
+<!-- 6 TYPE -->
+<section class="pg" id="p06">
+ <div class="hd"><h1>Typography<small>ตัวอักษร</small></h1><span>05 / Typography</span></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:30px;height:640px">
+  <div class="tile p" style="flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:50px 44px">
+   <div class="tl">อังกฤษ · Young Serif Regular</div>
+   <div style="font:400 92px/1 YS;margin-top:10px">Aa</div>
+   <div style="font:400 30px/1.4 YS;letter-spacing:.14em;margin-top:24px">BAAN BOONTHAWEE</div>
+   <div style="font:400 20px/1.6 YS;margin-top:16px">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz 0123456789</div>
+   <div class="cap" style="margin-top:22px">โลโก้/หัวข้อ: <b>ตัวพิมพ์ใหญ่ทั้งหมด · Tracking +140</b> (Illustrator) / letter-spacing 0.14em (เว็บ)<br>ฟรีจาก Google Fonts (OFL)</div>
+  </div>
+  <div class="tile p" style="flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:50px 44px">
+   <div class="tl">ไทย · Trirong Medium (500)</div>
+   <div style="font:500 92px/1.15 Trirong">กข</div>
+   <div style="font:500 30px/1.5 Trirong;margin-top:14px">บ้านบุญทวี อพาร์ทเม้น</div>
+   <div style="font:400 20px/1.8 Trirong;margin-top:10px">เนื้อหาเอกสารใช้ Trirong Regular (400)<br>สัญญาเช่า ใบเสร็จ ประกาศ ใช้ตัวนี้ทั้งหมด ๐๑๒๓๔๕</div>
+   <div class="cap" style="margin-top:22px">ไทยมีหัว เข้ากับ serif อังกฤษ · โลโก้ใช้ <b>Medium 500</b> · ไม่ยืดช่องไฟภาษาไทย<br>ฟรีจาก Google Fonts (OFL)</div>
+  </div>
+ </div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+
+<!-- 7 DON'TS -->
+<section class="pg" id="p07">
+ <div class="hd"><h1>Don'ts<small>การใช้ที่ห้าม</small></h1><span>06 / Misuse</span></div>
+ <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:20px;margin-top:30px;height:700px">
+  <div class="tile p" style="flex-direction:column"><div class="no">✕</div><img src="final/svg/BBT-B-vertical-color.svg" width="300" style="transform:scaleX(1.35)"><div class="cap" style="position:absolute;bottom:14px">ห้ามยืดหรือบีบสัดส่วน</div></div>
+  <div class="tile p" style="flex-direction:column"><div class="no">✕</div><img src="final/svg/BBT-A-stamp-color.svg" width="180" style="filter:hue-rotate(170deg)"><div class="cap" style="position:absolute;bottom:14px">ห้ามเปลี่ยนสีไฟ หรือเพิ่มสีอื่น</div></div>
+  <div class="tile p" style="flex-direction:column"><div class="no">✕</div><div style="position:relative"><img src="final/svg/BBT-B-vertical-color.svg" width="300"><div style="position:absolute;left:40px;right:40px;bottom:30px;height:1.5px;background:var(--ink)"></div></div><div class="cap" style="position:absolute;bottom:14px">ห้ามเพิ่มเส้นคั่น กรอบ หรือเงา</div></div>
+  <div class="tile p" style="flex-direction:column"><div class="no">✕</div><img src="final/svg/BBT-A-stamp-color.svg" width="180" style="transform:rotate(-14deg)"><div class="cap" style="position:absolute;bottom:14px">ห้ามหมุนหรือเอียง (ยกเว้นตรายางจริง)</div></div>
+  <div class="tile" style="flex-direction:column;background:linear-gradient(135deg,#8E8579,#C9B89B 50%,#6F7D86)"><div class="no">✕</div><img src="final/svg/BBT-C-horizontal-color.svg" width="360"><div class="cap" style="position:absolute;bottom:14px;color:#fff">ห้ามวางบนพื้นลาย/ภาพ/สีกลาง — ใช้พื้นขาวนวล ขาว หรือดำ</div></div>
+  <div class="tile p" style="flex-direction:column"><div class="no">✕</div><div style="display:flex;align-items:center;gap:16px"><img src="final/svg/BBT-A-stamp-color.svg" width="110"><div style="font:700 30px/1.1 DM">baan<br>boonthawee</div></div><div class="cap" style="position:absolute;bottom:14px">ห้ามเปลี่ยนฟอนต์หรือพิมพ์ชื่อใหม่เอง — ใช้ไฟล์โลโก้เท่านั้น</div></div>
+ </div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+
+<!-- 8 APPLICATIONS -->
+<section class="pg" id="p08">
+ <div class="hd"><h1>Applications<small>ตัวอย่างการใช้งาน (mockup คร่าวๆ)</small></h1><span>07 / Applications</span></div>
+ <div style="display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:20px;margin-top:30px;height:700px">
+  <div class="tile" style="background:linear-gradient(#B9B2A6,#8C857B)"><div class="tl" style="color:#fff">ป้ายกล่องไฟหน้าตึก</div>
+   <div style="background:var(--ink);padding:36px 54px;border-radius:6px;box-shadow:0 0 40px #F7BC4B44,0 14px 30px #0006"><img src="final/svg/BBT-C-horizontal-reverse.svg" width="520"></div></div>
+  <div class="tile p" style="flex-direction:column"><div class="tl">Line OA / โซเชียล</div>
+   <div style="width:300px;background:#fff;border-radius:22px;box-shadow:0 10px 30px #0002;padding:26px 20px;display:flex;flex-direction:column;align-items:center">
+    <div style="width:120px;height:120px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center"><img src="final/svg/BBT-A-stamp-reverse.svg" width="86"></div>
+    <div style="font:400 19px YS;letter-spacing:.1em;margin-top:14px">BAAN BOONTHAWEE</div><div style="font:500 14px Trirong;opacity:.7">บ้านบุญทวี อพาร์ทเม้น</div></div></div>
+  <div class="tile" style="background:#D8D3CA"><div class="tl">หัวกระดาษสัญญาเช่า (ข้อความตัวอย่าง)</div>
+   <div style="width:640px;height:300px;background:#fff;box-shadow:0 6px 20px #0002;padding:30px 40px;position:relative">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #0002;padding-bottom:16px"><img src="final/svg/BBT-C-horizontal-color.svg" width="230"><div style="font:400 12px/1.6 Trirong;text-align:right;opacity:.7">ที่อยู่ / เบอร์โทร / อีเมล<br>(ใส่ข้อมูลจริง)</div></div>
+    <div style="font:500 20px Trirong;margin-top:20px">สัญญาเช่าห้องพัก</div>
+    <div style="height:6px;width:80%;background:#e6e2da;margin-top:16px"></div><div style="height:6px;width:90%;background:#e6e2da;margin-top:10px"></div><div style="height:6px;width:70%;background:#e6e2da;margin-top:10px"></div>
+    <img src="final/svg/BBT-A-stamp-black.svg" width="92" style="position:absolute;right:46px;bottom:26px;transform:rotate(-7deg);opacity:.8;filter:url(#stampF)"></div></div>
+  <div class="tile p" style="flex-direction:column"><div class="tl">ป้ายเลขห้อง (ตัวอย่าง)</div>
+   <div style="width:250px;height:250px;background:var(--ink);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 10px 24px #0003">
+    <img src="final/svg/BBT-A-stamp-white.svg" width="64"><div style="font:400 64px YS;color:var(--pap);margin-top:10px;letter-spacing:.06em">204</div></div></div>
+ </div>
+ <div class="ft"><span>Baan Boonthawee</span><span>บ้านบุญทวี</span></div>
+</section>
+</body></html>
