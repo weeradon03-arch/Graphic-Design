@@ -6,7 +6,7 @@
 | สกิล | ทำอะไร |
 |---|---|
 | [`graphic-designer`](.claude/skills/graphic-designer/SKILL.md) | สกิลหลัก: ถามบรีฟ → ref และทิศทาง → ดราฟต์ → ทำจริง → CI และไฟล์ส่งมอบ ครอบคลุมโลโก้, CI, layout, artwork, คู่สี, ฟอนต์ไทย-อังกฤษ, มาสคอต, งานพิมพ์ |
-| [`motion-graphics`](.claude/skills/motion-graphics/SKILL.md) | โมชั่นทุกแบรนด์: หลักคิดแบบผู้กำกับโมชั่น (จาก LottieFiles motion-design-skill, MIT) + ลงมือใน After Effects: บรีฟ, storyboard, expression, สคริปต์ `.jsx`, export |
+| [`motion-graphics`](.claude/skills/motion-graphics/SKILL.md) | โมชั่นทุกแบรนด์: หลักคิดแบบผู้กำกับโมชั่น (จาก LottieFiles motion-design-skill, MIT) + ลงมือใน After Effects: บรีฟ, storyboard, คลิปตัวอย่าง (GSAP animatic MP4/GIF), expression, สคริปต์ `.jsx`, export |
 | [`pinterest-ref-scout`](.claude/skills/pinterest-ref-scout/SKILL.md) | ดึง ref จาก Pinterest เฉพาะ pin ใหม่ สรุปเป็นข้อความเพื่อประหยัดเครดิต |
 | [`design-board-render`](.claude/skills/design-board-render/SKILL.md) | ทำภาพพรีเซนต์ PNG (คอนเซ็ปต์, ดราฟต์, CI sheet, storyboard) พร้อมเช็กลิสต์ QA |
 
@@ -27,7 +27,7 @@ docs/skill-gaps.md       สิ่งที่ยังขาดและแผ�
 
 ## สิ่งที่ environment ต้องมี
 - Network: `www.pinterest.com`, `pinterest.com`, `i.pinimg.com`, `v1.pinimg.com` และ npm registry (ติดตั้งฟอนต์)
-- เครื่องมือ: Node + Playwright (Chromium), Python 3 + Pillow, ffmpeg
+- เครื่องมือ: Node + Playwright (Chromium), Python 3 + Pillow, ffmpeg (GSAP ติดตั้งตอนใช้ด้วย `npm i gsap` ไม่เก็บใน repo)
 - ฟอนต์ทั้งหมดเป็น Google Fonts ผ่าน Fontsource (ฟรี, OFL) ติดตั้งด้วย `design-board-render/scripts/setup_fonts.sh`
 
 ## ประหยัดเครดิต

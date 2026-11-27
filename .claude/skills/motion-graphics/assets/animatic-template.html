@@ -1,0 +1,42 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  Animatic template (GSAP). Rendered frame-exact by scripts/animatic.js.
+  Rules:
+  - Everything visible lives inside #stage (1080×1080 by default; change size + viewport for 9:16).
+  - Build ONE timeline: window.tl = gsap.timeline({ paused: true }). Never autoplay.
+  - Use the times and easings from the storyboard table so the animatic matches it.
+  - Easing map: gentle float = "power1.inOut" or CustomEase-free "sine.inOut";
+    strong ease-out = "power3.out"/"expo.out"; bounce settle = "back.out(1.6)";
+    overshoot = "back.out(2)"; ease-in fall = "power2.in"; hold = tl.to({}, {duration:x}).
+  - Layers: PNG layers cut from the logo (by colour / crop) or inline SVG.
+  - Line "draw-on": SVG stroke → animate strokeDashoffset; raster layer → animate clip-path inset.
+  - Hand-drawn boil at 12 fps: window.onFrame(t, frame) runs every frame; change an SVG
+    feTurbulence seed every 2 frames (frame>>1).
+  - Final hold ≥ 0.6 s at the end of the timeline.
+  - Pitfall: fromTo()/from() apply their start values at frame 0 (immediateRender). For a
+    tween that starts later in the timeline, pass immediateRender:false or the element shows early.
+-->
+<style>
+html,body{margin:0;background:#FAF8F0}
+#stage{position:relative;width:1080px;height:1080px;overflow:hidden;background:#FAF8F0}
+.layer{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain}
+</style>
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+</head><body>
+<svg width="0" height="0" style="position:absolute"><filter id="boil"><feTurbulence id="turb" type="fractalNoise" baseFrequency=".02" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></svg>
+<div id="stage">
+  <div id="art" style="position:absolute;inset:0;filter:url(#boil)">
+    <!-- <img class="layer" id="body" src="layers/body.png"> -->
+    <svg class="layer" viewBox="0 0 1080 1080"><circle id="dot" cx="540" cy="540" r="80" fill="#CB6048"/></svg>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.from('#dot', { scale: 0, transformOrigin: '50% 50%', duration: 0.5, ease: 'back.out(1.6)' })
+  .to({}, { duration: 0.8 });           // final hold
+window.tl = tl;
+const turb = document.getElementById('turb');
+window.onFrame = (t, f) => turb.setAttribute('seed', 1 + (f >> 1) % 6);   // 12 fps boil
+</script>
+</body></html>

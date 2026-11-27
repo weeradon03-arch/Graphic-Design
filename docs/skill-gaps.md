@@ -28,7 +28,8 @@
 **ปัญหา:** mockup ตอนนี้วาดด้วย CSS (ป้าย แก้ว ถุง) ดูเป็นกราฟิก ไม่เหมือนภาพถ่าย
 **ทางแก้:** เตรียมชุด mockup PSD (smart object) หรือรูปถ่ายเปล่าของร้าน/สินค้าจริงใส่ใน `assets/mockups/` แล้วให้สกิลวางงานลงบนภาพ (perspective transform ด้วย PIL/OpenCV) หรือใช้ Firefly Generative Fill
 
-### 4. ตัวอย่างโมชั่นเป็นวิดีโอ
+### 4. ตัวอย่างโมชั่นเป็นวิดีโอ (ทำได้แล้วแบบหยาบ)
+**ทำแล้ว:** `motion-graphics/scripts/animatic.js` + `assets/animatic-template.html` ใช้ GSAP เรนเดอร์คลิปตัวอย่าง MP4/GIF แบบตรงเฟรม (ทดสอบกับ SOLTO แล้ว) ยังเป็นแบบหยาบ ใช้ดูจังหวะก่อนเข้า AE
 **ทางเลือกใหม่:** LottieFiles Creator MCP (`https://creator.mcp.lottiefiles.com/mcp`) export MP4/GIF/Lottie ได้ แต่ต้องเปิด host นี้ใน environment network ก่อน
 **ปัญหา:** ส่งได้แค่ storyboard ภาพนิ่ง ผู้ใช้ยังไม่เห็นการเคลื่อนไหวจริงก่อนเข้า AE
 **ทางแก้:** เพิ่มสคริปต์ทำ animatic: animate SVG ด้วย CSS/Web Animations แล้วอัดด้วย Playwright (`recordVideo`) + ffmpeg เป็น MP4/GIF สั้นๆ

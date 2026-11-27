@@ -17,6 +17,7 @@ Reply in Thai. The user animates in **After Effects** and wants image previews b
 1. **Brief ⏸** — ask only what's unknown: piece (sting / intro / reel / signage / sticker), platform + ratio + length + loop, music/BPM, mood, motion refs, deliverable format. Append to `brands/<brand>/brief.md` under "Motion".
 2. **Direction ⏸** — decide personality, timing and easing first (principles), then pick a recipe. Present a 6–8 frame storyboard image via `design-board-render`, with this table:
    `| time | frame | movement | easing / graph | sound |`
+   Optional (when asked or when timing is the open question): a rough **animatic MP4/GIF** with GSAP — see routing table.
 3. **Build** — AE steps (comp, layers, effects, keyframes, influence %, copy-paste expressions). Offer `scripts/ae_logo_presets.jsx` (Blob Bounce, Spin & Snap, Overshoot, Ease-out, Width Wave, Gooey, Boil Line, Film Grain) or write a new ExtendScript from it (ES3: `var`, no arrow/let/const/template strings; wrap in `app.beginUndoGroup`; run via File > Scripts > Run Script File). Say scripts are untested in real AE and ask for the error text if one fails.
 4. **Deliver** — export settings; log the recipe and feedback in `brands/<brand>/feedback-log.md`.
 
@@ -36,6 +37,7 @@ Reply in Thai. The user animates in **After Effects** and wants image previews b
 | Recipes by logo type (blob bounce, wave reveal, boil line, stamp, kinetic type, character) | `references/recipes-by-logo-type.md` |
 | AE setup, Illustrator → AE, easing values, expressions, export | `references/ae-pipeline.md` |
 | Reels/campaign structure, grain/lens/color look, sound | `references/campaign-look-sound.md` |
+| Rough animatic MP4/GIF of the storyboard (GSAP, frame-exact) | `assets/animatic-template.html` (rules in its header) + `node scripts/animatic.js page.html out.mp4 --gif`; `npm i gsap` in the page folder first; cut logo layers by colour with PIL |
 | Rendered MP4/GIF/Lottie via LottieFiles Creator MCP | `references/principles/reference/export-and-render.md` (needs that MCP connected; network may block it) |
 | Full LottieFiles quick reference (only if the rows above aren't enough) | `references/principles/quick-reference.md` |
 
