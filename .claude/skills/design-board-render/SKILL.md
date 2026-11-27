@@ -5,33 +5,32 @@ description: Turn design work into presentation images (PNG) — concept boards,
 
 # Design Board Render
 
-ผู้ใช้ชอบเห็นงานเป็น **ไฟล์รูป** สกิลนี้สร้างภาพพรีเซนต์จาก HTML + SVG แล้วเรนเดอร์เป็น PNG
+The user wants work as **image files**. Build HTML + SVG boards, render to PNG. Reply in Thai.
 
-## เครื่องมือ
-`SC=.claude/skills/design-board-render`
-- `scripts/setup_fonts.sh WORKDIR`: ติดตั้งฟอนต์ไทย-อังกฤษ (Fontsource, ฟรี) ลง `WORKDIR/fonts`
-- `scripts/render.js BOARD.html OUT_DIR [SCALE] [IDS]`: เรนเดอร์ทุก `<section id>` เป็น PNG
-- `assets/board-template.html`: บอร์ดพรีเซนต์ 1600×1000 (งานจริง)
-- `assets/draft-template.html`: บอร์ดดราฟต์ขาวดำ 6 ช่องมีเลขให้เลือก
-- `references/qa-checklist.md`: ตรวจก่อนส่ง
+## Tools (`SC=.claude/skills/design-board-render`)
+- `scripts/setup_fonts.sh WORKDIR [pkg…]` — installs Thai + English Fontsource fonts into `WORKDIR/fonts` (once per session)
+- `scripts/render.js BOARD.html OUT_DIR [SCALE] [IDS]` — each `<section id>` → PNG; prints WARN for failed fonts/images
+- `assets/board-template.html` (1600×1000 presentation) · `assets/draft-template.html` (grey-scale, 6 numbered thumbs)
+- `references/qa-checklist.md` — read before every send
 
-## ขั้นตอน
-1. **เตรียม WORKDIR** ใน scratchpad: `bash $SC/scripts/setup_fonts.sh $WORK` (ครั้งแรกครั้งเดียวต่อเซสชัน ถ้าต้องการฟอนต์อื่นใส่ชื่อแพ็กเกจต่อท้าย)
-2. **คัดลอก template** ไปที่ `$WORK/board.html` (ดราฟต์ใช้ draft-template) แล้ว:
-   - ใส่ `@font-face` ของฟอนต์แบรนด์ ตามชื่อไฟล์ใน `fonts/node_modules/@fontsource/<font>/files/`
-   - ใส่สีแบรนด์ใน `:root` จาก `brands/<brand>/ci.md`
-   - หนึ่ง `<section class="board" id="...">` ต่อหนึ่งแผ่น
-   - งานกราฟิกเขียนเป็น SVG `<symbol>` ใน `<defs>` แล้วเรียกซ้ำด้วย `<use>` เพื่อแสดงหลายสี/หลายขนาด (ดู `graphic-designer/references/illustration.md`)
-   - รูป ref: คัดลอกไฟล์ไว้ใน `$WORK/refs/` แล้วอ้างด้วย path สัมพัทธ์
-3. **เรนเดอร์ตรวจ**: `node $SC/scripts/render.js $WORK/board.html $WORK/out 1` แล้วเปิดดู **ทุกแผ่น** ตาม `references/qa-checklist.md` แก้แล้วเรนเดอร์ซ้ำจนผ่าน ถ้ามีแผ่นเดียวที่ต้องดูรายละเอียด ให้ crop ส่วนนั้นด้วย PIL แทนการดูทั้งแผ่นที่ scale 2
-4. **เรนเดอร์ส่งจริง**: scale 2 ลงโฟลเดอร์ที่ผู้ใช้เปิดได้ (เช่น `deliverables/<brand>/<round>/`) ตั้งชื่อไฟล์บอกลำดับ แล้วส่งด้วยเครื่องมือส่งไฟล์ (SendUserFile ถ้ามี)
-5. **ข้อความสรุปให้ผู้ใช้**: แต่ละแผ่นคืออะไร, แนะนำแบบไหนเพราะอะไร, ข้อจำกัดที่ยังมี, ข้อความที่ใส่เองเป็นตัวอย่าง
+## Credit budget
+- Render scale 1 and look once per board; to check a detail, crop that area with PIL instead of viewing the whole board at scale 2.
+- Re-render only the boards you changed (pass IDS).
+- Reuse one WORKDIR and one fonts install per session; reuse SVG `<symbol>`s via `<use>` instead of redrawing.
+- Render scale 2 once, for delivery only.
 
-## เทคนิคที่ใช้ได้ดี
-- เนื้อกระดาษ: คลาส `.grain` (SVG noise + multiply)
-- ขอบหยักแบบตัดกระดาษหรือหมึก: `feTurbulence` + `feDisplacementMap` scale 3–6
-- ฟองหรือของเหลว (gooey): `feGaussianBlur` + `feColorMatrix` alpha 28 −11 และต้องใส่ `color-interpolation-filters="sRGB"` ไม่งั้นขอบจะมีเส้นเข้ม
-- เส้นแรเงาแบบภาพพิมพ์: `<pattern>` เส้นเฉียง + `clip-path` ตามรูปทรง
-- สลับสไตล์ตัวละครตัวเดียว: CSS variables บน `<use>`
-- Mockup ง่ายๆ (ป้าย แก้ว ถุง) วาดด้วย CSS/SVG ได้ แต่ถ้าต้องสมจริงให้แนะนำ Photoshop smart object หรือ Firefly
-- ตัวอักษรไทยแยกทีละตัวต้องใช้ `Intl.Segmenter('th',{granularity:'grapheme'})`
+## Steps
+1. `bash $SC/scripts/setup_fonts.sh $WORK` (scratchpad).
+2. Copy a template to `$WORK/board.html`: add `@font-face` for brand fonts (files in `fonts/node_modules/@fontsource/<font>/files/`; Thai-only files need an English font first in `font-family`), brand colors in `:root` from `brands/<brand>/ci.md`, one `<section class="board" id>` per board, artwork as SVG `<symbol>`s, refs copied to `$WORK/refs/`.
+3. `node $SC/scripts/render.js $WORK/board.html $WORK/out 1` → check every board against the QA checklist → fix → re-render.
+4. Final: scale 2 into a folder the user can open (e.g. `deliverables/<brand>/<round>/`), numbered descriptive filenames; send with SendUserFile when available.
+5. Tell the user what each board is, the recommendation and why, known limits, and which text is placeholder.
+
+## Techniques
+- Paper grain: `.grain` class (SVG noise, multiply)
+- Cut-paper / ink edges: `feTurbulence` + `feDisplacementMap` scale 3–6
+- Gooey: `feGaussianBlur` + `feColorMatrix` alpha `28 -11`, with `color-interpolation-filters="sRGB"` (else dark halos)
+- Print hatching: line `<pattern>` + `clip-path`
+- One character, many styles: CSS variables through `<use>`
+- Thai per-letter effects: split with `Intl.Segmenter('th',{granularity:'grapheme'})`
+- Quick mockups (sign, cup, bag) in CSS/SVG; for realism suggest Photoshop smart objects or Firefly

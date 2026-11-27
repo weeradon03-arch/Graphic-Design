@@ -6,7 +6,7 @@
 | สกิล | ทำอะไร |
 |---|---|
 | [`graphic-designer`](.claude/skills/graphic-designer/SKILL.md) | สกิลหลัก: ถามบรีฟ → ref และทิศทาง → ดราฟต์ → ทำจริง → CI และไฟล์ส่งมอบ ครอบคลุมโลโก้, CI, layout, artwork, คู่สี, ฟอนต์ไทย-อังกฤษ, มาสคอต, งานพิมพ์ |
-| [`motion-graphics`](.claude/skills/motion-graphics/SKILL.md) | logo animation และโมชั่นใน After Effects: บรีฟ, storyboard, ขั้นตอน AE, expression, สคริปต์ `.jsx`, export |
+| [`motion-graphics`](.claude/skills/motion-graphics/SKILL.md) | โมชั่นทุกแบรนด์: หลักคิดแบบผู้กำกับโมชั่น (จาก LottieFiles motion-design-skill, MIT) + ลงมือใน After Effects: บรีฟ, storyboard, expression, สคริปต์ `.jsx`, export |
 | [`pinterest-ref-scout`](.claude/skills/pinterest-ref-scout/SKILL.md) | ดึง ref จาก Pinterest เฉพาะ pin ใหม่ สรุปเป็นข้อความเพื่อประหยัดเครดิต |
 | [`design-board-render`](.claude/skills/design-board-render/SKILL.md) | ทำภาพพรีเซนต์ PNG (คอนเซ็ปต์, ดราฟต์, CI sheet, storyboard) พร้อมเช็กลิสต์ QA |
 
@@ -29,3 +29,12 @@ docs/skill-gaps.md       สิ่งที่ยังขาดและแผ�
 - Network: `www.pinterest.com`, `pinterest.com`, `i.pinimg.com`, `v1.pinimg.com` และ npm registry (ติดตั้งฟอนต์)
 - เครื่องมือ: Node + Playwright (Chromium), Python 3 + Pillow, ffmpeg
 - ฟอนต์ทั้งหมดเป็น Google Fonts ผ่าน Fontsource (ฟรี, OFL) ติดตั้งด้วย `design-board-render/scripts/setup_fonts.sh`
+
+## ประหยัดเครดิต
+- `SKILL.md` ทุกตัวเขียนเป็นภาษาอังกฤษแบบกระชับ (ภาษาไทยใช้ token มากกว่า 2–3 เท่า) แต่ Claude ยังตอบเป็นภาษาไทย
+- แต่ละสกิลมีตารางบอกว่า "งานแบบนี้อ่านไฟล์ไหน" อ่านเฉพาะไฟล์ที่ต้องใช้ ไม่โหลดทั้งโฟลเดอร์
+- ref เก่าอ่านจากข้อความใน `refs/style-library.md` ดูรูปเฉพาะ pin ใหม่
+- เรนเดอร์ภาพตรวจที่ขนาดเล็ก เรนเดอร์ขนาดจริงครั้งเดียวตอนส่ง
+
+## เครดิต
+`motion-graphics/references/principles/` มาจาก [LottieFiles/motion-design-skill](https://github.com/LottieFiles/motion-design-skill) (MIT © 2025 LottieFiles) ดู `NOTICE.md` และ `LICENSE` ในโฟลเดอร์นั้น

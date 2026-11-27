@@ -9,7 +9,7 @@
 | โลโก้, CI, layout, artwork, คู่สี, ฟอนต์ไทย-อังกฤษ 7 สาย, มาสคอต, เตรียมไฟล์พิมพ์ (ระดับคำแนะนำและร่าง) | graphic-designer |
 | ดึง ref จาก Pinterest เฉพาะ pin ใหม่ รวมรูปเป็นแผ่นเดียว แตกเฟรมวิดีโอโมชั่น | pinterest-ref-scout |
 | ทำภาพพรีเซนต์ PNG ที่มีฟอนต์ไทยจริง พร้อมเช็กลิสต์ QA | design-board-render |
-| storyboard, ขั้นตอน After Effects, expression, สคริปต์ AE | motion-graphics |
+| หลักคิดโมชั่น (timing, easing, choreography, อารมณ์) + storyboard, After Effects, expression, สคริปต์ | motion-graphics (+ LottieFiles principles) |
 
 ## ยังขาด (เรียงตามผลกระทบ)
 
@@ -29,6 +29,7 @@
 **ทางแก้:** เตรียมชุด mockup PSD (smart object) หรือรูปถ่ายเปล่าของร้าน/สินค้าจริงใส่ใน `assets/mockups/` แล้วให้สกิลวางงานลงบนภาพ (perspective transform ด้วย PIL/OpenCV) หรือใช้ Firefly Generative Fill
 
 ### 4. ตัวอย่างโมชั่นเป็นวิดีโอ
+**ทางเลือกใหม่:** LottieFiles Creator MCP (`https://creator.mcp.lottiefiles.com/mcp`) export MP4/GIF/Lottie ได้ แต่ต้องเปิด host นี้ใน environment network ก่อน
 **ปัญหา:** ส่งได้แค่ storyboard ภาพนิ่ง ผู้ใช้ยังไม่เห็นการเคลื่อนไหวจริงก่อนเข้า AE
 **ทางแก้:** เพิ่มสคริปต์ทำ animatic: animate SVG ด้วย CSS/Web Animations แล้วอัดด้วย Playwright (`recordVideo`) + ffmpeg เป็น MP4/GIF สั้นๆ
 

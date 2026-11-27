@@ -1,47 +1,49 @@
 ---
 name: motion-graphics
-description: Motion design and logo animation for any brand in After Effects — brief interview, storyboard frames as images, step-by-step AE setup (comps, effects, keyframes, Graph Editor easing, expressions), ready-to-run ExtendScript presets, and export specs for reels/TikTok, Lottie, GIF, digital signage. Uses each brand's CI from brands/(brand)/ci.md and motion refs from the user's Pinterest. Use whenever the user asks for โมชั่น, ภาพเคลื่อนไหว, motion graphic, logo animation, logo sting, intro/outro, reels/TikTok animation, kinetic type, mascot animation, After Effects help or expressions, Lottie — even if they don't name this skill.
+description: Motion design and logo animation for any brand — motion-director thinking (timing, easing, choreography, emotion, Disney principles, adapted from LottieFiles) plus hands-on After Effects delivery (storyboard images, comp setup, Graph Editor easing, expressions, ExtendScript presets) and export for reels/TikTok, Lottie, GIF, signage. Uses each brand's CI from brands/(brand)/ci.md. Use whenever the user asks for โมชั่น, ภาพเคลื่อนไหว, motion graphic, logo animation, logo sting, intro/outro, reels/TikTok animation, kinetic type, mascot animation, UI micro-interaction, After Effects help or expressions, Lottie — even if they don't name this skill.
 ---
 
 # Motion Graphics
 
-ผู้ใช้ทำโมชั่นใน **After Effects** สกิลนี้ทำงานกับทุกแบรนด์ โดยใช้ CI ของแบรนด์นั้น (`brands/<brand>/ci.md`) ถ้ายังไม่มี CI ให้ทำงานออกแบบด้วยสกิล `graphic-designer` ก่อน หรือถามผู้ใช้
+Reply in Thai. The user animates in **After Effects** and wants image previews before work starts. Use the brand's CI (`brands/<brand>/ci.md`); if none exists, ask or run `graphic-designer` first.
 
-## Workflow (หยุดรอผู้ใช้ทุก ⏸)
+## Credit budget
+- Read **only** the files the routing table points to for the current step; never load a whole folder.
+- Don't re-read a file already read in this conversation.
+- Motion refs: use `pinterest-ref-scout` (new pins only) and `video_frames.sh` (one tiled image per video), not single frames.
+- Storyboards: render at scale 1 to check, scale 2 only for the final file.
 
-### 1 · บรีฟโมชั่น ⏸
-ถามเฉพาะข้อที่ยังไม่รู้:
-- ชิ้นงานอะไร: logo sting, intro/outro, โพสต์โฆษณา, reels, ป้ายดิจิทัลในร้าน, สติกเกอร์เคลื่อนไหว
-- ลงที่ไหน, สัดส่วน (9:16, 1:1, 16:9), ความยาว, ต้อง loop ไหม
-- มีเพลงหรือเสียงไหม (BPM, ต้องตัดตามบีต)
-- อารมณ์: นุ่มเด้ง, เร็วแรงแบบกีฬา, เรียบหรู, กวน, วินเทจ
-- ref โมชั่น: บอร์ดโมชั่นใน Pinterest (ใช้สกิล `pinterest-ref-scout` + `video_frames.sh` ดูทีละเฟรม) หรือคลิปที่ชอบ
-- ไฟล์ส่งมอบ: MP4, MOV alpha, Lottie, GIF
-บันทึกเพิ่มใน `brands/<brand>/brief.md` หัวข้อ Motion
+## Workflow (⏸ = stop and wait for the user)
+1. **Brief ⏸** — ask only what's unknown: piece (sting / intro / reel / signage / sticker), platform + ratio + length + loop, music/BPM, mood, motion refs, deliverable format. Append to `brands/<brand>/brief.md` under "Motion".
+2. **Direction ⏸** — decide personality, timing and easing first (principles), then pick a recipe. Present a 6–8 frame storyboard image via `design-board-render`, with this table:
+   `| time | frame | movement | easing / graph | sound |`
+3. **Build** — AE steps (comp, layers, effects, keyframes, influence %, copy-paste expressions). Offer `scripts/ae_logo_presets.jsx` (Blob Bounce, Spin & Snap, Overshoot, Ease-out, Width Wave, Gooey, Boil Line, Film Grain) or write a new ExtendScript from it (ES3: `var`, no arrow/let/const/template strings; wrap in `app.beginUndoGroup`; run via File > Scripts > Run Script File). Say scripts are untested in real AE and ask for the error text if one fails.
+4. **Deliver** — export settings; log the recipe and feedback in `brands/<brand>/feedback-log.md`.
 
-### 2 · ทิศทางและ storyboard ⏸
-- เลือกสูตรจาก `references/motion-playbook.md` ที่ตรงกับฟอร์มของโลโก้และ ref (เช่น gooey, width wave, spin & snap, character pose)
-- ทำ **storyboard เป็นภาพ** 6–8 เฟรมด้วยสกิล `design-board-render` (แต่ละเฟรมมีเวลา, การเคลื่อนไหว, easing) และตารางนี้:
-```
-**Motion: [ชื่อ]** · X วิ · 1080×1920 · 30fps · loop ใช่/ไม่
-| เวลา | ภาพ | การเคลื่อนไหว | Easing / Graph | เสียง |
-|---|---|---|---|---|
-```
-- ส่งให้ผู้ใช้เลือกหรือปรับก่อนลงมือ
+## Routing table (read just the row you need)
+| Need | File |
+|---|---|
+| Pick personality, timing, easing fast | `references/principles/reference/timing-easing-tables.md` |
+| Map brand emotion → motion | `references/principles/director/emotion-mapping.md`, `director/motion-personality.md` |
+| Sequence several elements | `references/principles/director/choreography.md` |
+| Squash/stretch, anticipation, follow-through | `references/principles/director/disney-principles.md` |
+| Story arc for a 10–30 s piece | `references/principles/director/narrative-structure.md` |
+| Which property to animate | `references/principles/reference/property-selection.md` |
+| UI micro-interactions (button, loading, success, error) | `references/principles/patterns/state-feedback.md`, `patterns/entrance-exit.md` |
+| Looping / ambient (signage, idle) | `references/principles/patterns/ambient-continuous.md` |
+| Something feels off | `references/principles/reference/troubleshooting.md`, `reference/quality-checklist.md` |
+| Recipes from the user's motion refs (gooey melt, width wave, liquid glass, spin & snap, brand reel) | `references/recipes-from-refs.md` |
+| Recipes by logo type (blob bounce, wave reveal, boil line, stamp, kinetic type, character) | `references/recipes-by-logo-type.md` |
+| AE setup, Illustrator → AE, easing values, expressions, export | `references/ae-pipeline.md` |
+| Reels/campaign structure, grain/lens/color look, sound | `references/campaign-look-sound.md` |
+| Rendered MP4/GIF/Lottie via LottieFiles Creator MCP | `references/principles/reference/export-and-render.md` (needs that MCP connected; network may block it) |
+| Full LottieFiles quick reference (only if the rows above aren't enough) | `references/principles/quick-reference.md` |
 
-### 3 · ขั้นตอนใน After Effects
-- Pipeline จาก Illustrator: แยก layer ทุกชิ้นที่ขยับ → Import as Composition (Retain Layer Sizes) → Create Shapes from Vector Layer
-- ให้ comp settings, layer, effect, คีย์เฟรม, ค่า influence ใน Graph Editor, expression ที่ก๊อปไปวางได้
-- ถ้าช่วยประหยัดเวลา ส่ง `scripts/ae_logo_presets.jsx` (8 ปุ่ม: Blob Bounce, Spin & Snap, Overshoot, Ease-out แรง, Width Wave, Gooey, Boil Line, Film Grain) หรือเขียนสคริปต์ใหม่จากฐานนี้: ExtendScript (ES3: `var`, ห้าม arrow function/let/const/template string) ครอบด้วย `app.beginUndoGroup` และบอกให้รันผ่าน File > Scripts > Run Script File
-- สคริปต์ยังไม่ได้ทดสอบใน AE จริงทุกเวอร์ชัน ให้บอกผู้ใช้ และขอข้อความ error ถ้ารันไม่ผ่าน
+## Rules
+- Movement follows the form and brand personality; never a plain fade/zoom.
+- Logo sting 1.5–3 s; final hold ≥ 0.6 s.
+- Weighted easing: strong ease-out (incoming influence 85–95%) or overshoot; no linear.
+- Keep the brand palette; let motion carry the energy.
+- Respect platform safe zones (reels: top 250 px, bottom 350 px).
 
-### 4 · ส่งมอบ
-- export spec ตาม `references/motion-playbook.md` §8 (Media Encoder, ProRes 4444 alpha, Bodymovin/LottieFiles)
-- บันทึกสูตรที่ใช้และ feedback ใน `brands/<brand>/feedback-log.md`
-
-## หลักการ
-- ขยับตามบุคลิกของฟอร์มและแบรนด์ ไม่ใช่ fade/zoom เฉยๆ
-- logo sting 1.5–3 วินาที ค้างภาพนิ่งตอนจบ ≥ 0.6 วินาที
-- easing ต้องมีน้ำหนัก: ease-out แรง (influence 85–95%) หรือ overshoot ห้าม linear
-- คง palette ของแบรนด์ ให้การเคลื่อนไหวเป็นตัวสร้างพลัง
-- เคารพ safe zone ของแพลตฟอร์ม (reels: บน 250px ล่าง 350px)
+`references/principles/` is © LottieFiles, MIT — see `NOTICE.md` there.
